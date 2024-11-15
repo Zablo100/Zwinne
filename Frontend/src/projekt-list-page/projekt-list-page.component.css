@@ -1,0 +1,36 @@
+table{
+    width: 100%;
+   }
+   
+   #tabs{
+     height: 10vh;
+   }
+
+.page-table{
+    display: block;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 2px grey
+}
+
+.bottom-space{
+    height: 1vh;
+  }
+
+.page-background{
+    width: auto;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.mat-mdc-row:hover {
+    transition: ease-in 0.1s;
+    background-color: rgb(220, 236, 241);
+}
+
+.mat-mdc-row {
+    cursor: pointer;
+}
+
+
