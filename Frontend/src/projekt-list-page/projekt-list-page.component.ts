@@ -5,7 +5,7 @@ import { ProjektModel } from '../app/Models/Projekt';
 import {MatTableModule} from '@angular/material/table';
 import { StudentModel } from '../app/Models/Student';
 import { RouterLink, RouterModule, Routes } from '@angular/router';
-import { PrjektPageComponent } from '../prjekt-page/prjekt-page.component';
+import { PrjektPageComponent } from '../projekt-page/prjekt-page.component';
 import {MatButton} from "@angular/material/button";
 
 
