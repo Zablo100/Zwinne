@@ -7,7 +7,8 @@
   box-shadow: 10px 5px 5px red;
 }
 .mat-sidenav{
-  margin: 16px;
+  margin-top: 16px;
+  margin-left: 16px;
   width: 230px;
   border-right: none;
   background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -74,3 +75,4 @@
   font-weight: bold;
   margin-bottom: 5px;
 }
+

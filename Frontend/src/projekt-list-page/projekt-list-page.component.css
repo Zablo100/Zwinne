@@ -1,63 +1,59 @@
-table{
-    width: 100%;
-   }
-
-   #tabs{
-     height: 10vh;
-   }
-
-.page-table{
-    display: block;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 0px 2px grey
-}
-
-.bottom-space{
-    height: 1vh;
-  }
-
-.page-background{
-    width: auto;
-    padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 15px;
-}
-
-.mat-mdc-row:hover {
-    transition: ease-in 0.1s;
-    background-color: rgb(220, 236, 241);
-}
-
-.mat-mdc-row {
-    cursor: pointer;
-}
-
-/* Stylizacja tła strony */
-.page-background {
+/* Stylizacja samej tabeli */
+table.mat-table {
   width: 100%;
-  padding-top: 15px;
-  padding-left: 20px; /* Zwiększenie marginesu wewnętrznego */
-  padding-right: 20px; /* Zwiększenie marginesu wewnętrznego */
-  padding-bottom: 20px; /* Dodanie dolnego marginesu */
-  display: flex;
-  justify-content: center; /* Wyśrodkowanie zawartości */
+  border-collapse: collapse; /* Usunięcie odstępów między komórkami */
 }
 
-/* Stylizacja tabeli */
-.page-table {
-  display: block;
-  width: 100%;
-  max-width: 1200px; /* Ograniczenie szerokości tabeli */
-  background-color: white;
-  box-shadow: 0px 0px 2px grey;
-  padding: 15px; /* Dodanie paddingu wokół tabeli */
-  border-radius: 8px; /* Opcjonalnie zaokrąglenie rogów tabeli */
+/* Nagłówki tabeli */
+th.mat-header-cell {
+  text-align: center;
+  background-color: #3f51b5; /* Kolor tła nagłówka */
+  color: white;
+  padding: 12px 16px;
+  font-weight: bold;
 }
 
-/* Właściwości dla mat-toolbar (jeśli trzeba) */
-.mat-toolbar {
-  padding-left: 20px; /* Wyrównanie do lewej */
-  padding-right: 20px; /* Wyrównanie do prawej */
+/* Komórki tabeli */
+td.mat-cell {
+  text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+  vertical-align: middle; /* Wyśrodkowanie tekstu w pionie */
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd; /* Delikatne obramowanie dolne */
 }
 
+/* Ulepszenie wyglądu tabeli - obramowanie komórek */
+table.mat-table th, table.mat-table td {
+  border: 1px solid #ddd; /* Obramowanie wokół komórek */
+}
+
+/* Kolor tła co drugi wiersz - dla lepszej czytelności */
+tr.mat-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Zmiana koloru tła na hover */
+tr.mat-row:hover {
+  background-color: #e0e0e0;
+}
+
+/* Szerokość kolumn */
+.mat-column-nazwa,
+.mat-column-opis,
+.mat-column-dataczasUtworzenia,
+.mat-column-dataOddania,
+.mat-column-iloscStudentow {
+  width: 20%; /* Możesz dostosować szerokość kolumny */
+}
+
+/* Ulepszony wygląd tabeli z cieniem */
+table.mat-table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.button-rounded.mat-raised-button,
+.button-rounded.mat-flat-button,
+.button-rounded.mat-stroked-button {
+  border-radius: 25% / 50%; /* Zaokrąglony przycisk */
+}

@@ -6,6 +6,7 @@ import {MatTableModule} from '@angular/material/table';
 import { StudentModel } from '../app/Models/Student';
 import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { PrjektPageComponent } from '../prjekt-page/prjekt-page.component';
+import {MatButton} from "@angular/material/button";
 
 
 @Component({
@@ -16,13 +17,14 @@ import { PrjektPageComponent } from '../prjekt-page/prjekt-page.component';
     MatTableModule,
     RouterModule,
     PrjektPageComponent,
-    RouterLink
+    RouterLink,
+    MatButton
   ],
   templateUrl: './projekt-list-page.component.html',
   styleUrl: './projekt-list-page.component.css'
 })
 export class ProjektListPageComponent {
-  colNames = ["nazwa", "opis", "dataczasUtworzenia", "dataOddania", "iloscStudentow" ]
+  colNames = ["nazwa", "dataczasUtworzenia", "dataOddania", "iloscStudentow", "akcja" ]
   Projekty: ProjektModel[] = []
 
   constructor(private service: ProjektService){}
