@@ -1,9 +1,79 @@
+.mat-toolbar{
+  background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: white;
+  box-shadow: 10px 5px 5px red;
+}
+.mat-sidenav{
+  margin: 16px;
+  width: 230px;
+  border-right: none;
+  background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  color: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 10px 5px 5px red;
+}
+.app-title{
+  font-weight: bold;
+}
 .content{
-    padding: 0px;
-    display: flex;
+  height: auto;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 20px;
+}
+.mat-sidenav-container{
+  height: calc(100vh - 65px);
+  box-shadow: inset;
+
 
 }
+.menu-button{
+  width: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  color: white !important;
+}
+.admin-panel{
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-.full{
-    flex-basis: 100%;
+.admin-panel {
+  display: flex;
+  margin-left: auto;
+}
+
+@media screen and (max-width: 600px) {
+  .admin-panel {
+    display: none;
+  }
+}
+.menu-button:hover {
+  background-color: #e0e0e088; /* Domyślny kolor podświetlenia po najechaniu */
+}
+.mat-divider{
+  margin-top: 10px;
+  margin-bottom:10px;
+  background-color: white;
+}
+.title{
+  width: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.search-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding-right: 16px; /* Lub dostosuj marginesy według własnych preferencji */
 }
