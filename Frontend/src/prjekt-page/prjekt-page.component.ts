@@ -3,12 +3,16 @@ import { ProjektModel, ProjektWithTaskModel, ZadanieModel } from '../app/Models/
 import { ProjektService } from './projekt.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {MatCard} from "@angular/material/card";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'app-prjekt-page',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    MatCard,
+    MatDivider
   ],
   templateUrl: './prjekt-page.component.html',
   styleUrl: './prjekt-page.component.css'

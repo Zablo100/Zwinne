@@ -1,26 +1,22 @@
-<div class="page-background">
-    <div class="page-table">
         <table mat-table [dataSource]="Projekty">
             <!-- Position Column -->
             <ng-container matColumnDef="nazwa">
               <th mat-header-cell *matHeaderCellDef> Nazwa. </th>
-              <td mat-cell *matCellDef="let element" [routerLink]="['/projekt/', element.projektId]"> 
+              <td mat-cell *matCellDef="let element" [routerLink]="['/projekt/', element.projektId]">
                 <b>{{element.nazwa}} </b>
             </td>
             </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="opis">
+          <ng-container matColumnDef="opis">
               <th mat-header-cell *matHeaderCellDef> Opis </th>
               <td mat-cell *matCellDef="let element" [routerLink]="['/projekt/', element.projektId]"> {{element.opis}} </td>
             </ng-container>
-          
+
             <!-- Weight Column -->
             <ng-container matColumnDef="dataczasUtworzenia">
               <th mat-header-cell *matHeaderCellDef> Data rozpoczęcia </th>
               <td mat-cell *matCellDef="let element" [routerLink]="['/projekt/', element.projektId]"> {{element.dataczasUtworzenia}} </td>
             </ng-container>
-          
+
             <!-- Symbol Column -->
             <ng-container matColumnDef="dataOddania">
               <th mat-header-cell *matHeaderCellDef> Termin oddania </th>
@@ -31,9 +27,7 @@
                 <th mat-header-cell *matHeaderCellDef> Liczba studentów </th>
                 <td mat-cell *matCellDef="let element" [routerLink]="['/projekt/', element.projektId]"> {{getNumberOfStudents(element.studenci)}} </td>
               </ng-container>
-          
+
             <tr mat-header-row *matHeaderRowDef="colNames"></tr>
             <tr mat-row *matRowDef="let row; columns: colNames;"></tr>
-          </table> 
-    </div>
-</div>
+          </table>

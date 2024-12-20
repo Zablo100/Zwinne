@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+
 .mat-toolbar{
   background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   color: white;
@@ -26,9 +29,8 @@
 .mat-sidenav-container{
   height: calc(100vh - 65px);
   box-shadow: inset;
-
-
 }
+
 .menu-button{
   width: 100%;
   display: flex;
@@ -55,8 +57,9 @@
   }
 }
 .menu-button:hover {
-  background-color: #e0e0e088; /* Domyślny kolor podświetlenia po najechaniu */
+  background-color: rgb(224, 224, 224); /* Pełny kolor */
 }
+
 .mat-divider{
   margin-top: 10px;
   margin-bottom:10px;
@@ -70,10 +73,4 @@
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 5px;
-}
-.search-container {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  padding-right: 16px; /* Lub dostosuj marginesy według własnych preferencji */
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { AuthService } from '../auth.service';
-import { StorageService } from '../storage.service';
+import { AuthService } from '../app/Services/auth.service';
+import { StorageService } from '../app/Services/storage.service';
 import { Router } from '@angular/router';
 import {CommonModule, NgClass} from "@angular/common";
 import {FormsModule} from "@angular/forms";

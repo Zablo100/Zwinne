@@ -1,1 +1,56 @@
-<router-outlet></router-outlet>
+<mat-toolbar class="mat-elevation-z23">
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">
+      menu
+    </mat-icon>
+    <mat-icon *ngIf="sidenav.opened">
+      close
+    </mat-icon>
+  </button>
+  <img style="padding-right: 10px;" width="50" src="https://cdn-icons-png.flaticon.com/512/4661/4661361.png">
+  <span class="app-title">ProjectApp</span>
+</mat-toolbar>
+<!-- toolbar-->
+
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="shadow">
+    <span class="title"><!--*ngIf="isLoggedIn">Witaj, {{username}}!--></span>
+    <mat-divider></mat-divider>
+    <button mat-button class="menu-button" routerLink="projekty">
+      <mat-icon>home</mat-icon>
+      <span>Lista projektów</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="twojeProjekty">
+      <mat-icon>info</mat-icon>
+      <span>Twoje projekty</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="infoPage">
+      <mat-icon>contact_page</mat-icon>
+      <span>Kontakt</span>
+    </button>
+       <button mat-button class="menu-button" *ngIf="!isLoggedIn" routerLink="login">
+      <mat-icon>login</mat-icon>
+      <span>Zaloguj się</span>
+    </button>
+    <button mat-button class="menu-button" *ngIf="!isLoggedIn" routerLink="register">
+      <mat-icon>supervised_user_circle</mat-icon>
+      <span>Załóż konto</span>
+    </button>
+    <button mat-button class="menu-button" (click)="logout()" *ngIf="isLoggedIn">
+      <mat-icon>logout</mat-icon>
+      <span>Wyloguj się</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z4">
+      <router-outlet>
+
+      </router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+

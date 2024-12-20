@@ -1,7 +1,7 @@
 table{
     width: 100%;
    }
-   
+
    #tabs{
      height: 10vh;
    }
@@ -33,4 +33,31 @@ table{
     cursor: pointer;
 }
 
+/* Stylizacja tła strony */
+.page-background {
+  width: 100%;
+  padding-top: 15px;
+  padding-left: 20px; /* Zwiększenie marginesu wewnętrznego */
+  padding-right: 20px; /* Zwiększenie marginesu wewnętrznego */
+  padding-bottom: 20px; /* Dodanie dolnego marginesu */
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie zawartości */
+}
+
+/* Stylizacja tabeli */
+.page-table {
+  display: block;
+  width: 100%;
+  max-width: 1200px; /* Ograniczenie szerokości tabeli */
+  background-color: white;
+  box-shadow: 0px 0px 2px grey;
+  padding: 15px; /* Dodanie paddingu wokół tabeli */
+  border-radius: 8px; /* Opcjonalnie zaokrąglenie rogów tabeli */
+}
+
+/* Właściwości dla mat-toolbar (jeśli trzeba) */
+.mat-toolbar {
+  padding-left: 20px; /* Wyrównanie do lewej */
+  padding-right: 20px; /* Wyrównanie do prawej */
+}
 
