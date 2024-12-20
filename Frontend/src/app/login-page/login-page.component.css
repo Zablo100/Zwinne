@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+body{
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+}
+.box-area{
+  margin-top: 50px;
+  width: 850px;
+  height: 335px;
+  margin-bottom: 50px;
+}
+.rigth-box{
+  padding: 40px 30px 40px 0px;
+  font-weight: bold;
+}
+::placeholder{
+  font-size: 16px;
+}
+.text{
+  margin-top: 30px;
+  margin-bottom: 2px;
+
+}
+
+@media only screen and (max-width: 768px){
+  .box-area{
+    margin: 0 10px;
+    height: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .left-box{
+    height: 100px;
+    overflow: hidden;
+  }
+  .rigth-box{
+    margin-top: 20px;
+    padding: 20px;
+  }
+  .h2{
+    padding-top: 50%;
+  }
+}
+
+.left-box {
+  height: 300px; /* Ustaw wysokość diva (możesz dostosować według potrzeb) */
+  background-size: cover;
+}
+.but-class{
+  background: linear-gradient(to bottom,  rgb(169,3,41) 0%,rgb(143,2,34) 44%,rgb(109,0,25) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 100% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+.btn-grad:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
