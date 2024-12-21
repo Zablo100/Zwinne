@@ -20,15 +20,14 @@ import {MatDivider} from "@angular/material/divider";
 })
 export class RegisterComponent implements OnInit{
   form: any = {
-    username: null,
     email: null,
     password: null,
-    phone: null,
     name: null,
     lastName: null,
-    location: null,
     confirmPassword: null,
-    pesel: null
+    indeks: null,
+    tok: null
+
   };
   isSuccessful = false;
   isSignUpFailed = false;

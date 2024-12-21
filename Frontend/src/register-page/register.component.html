@@ -1,4 +1,4 @@
-  <div class="row border rounded-4 p-3 bg-white shadow box-area" *ngIf="!isLoggedIn">
+  <div style="padding:20px" *ngIf="!isLoggedIn">
     <form
       *ngIf="!isLoggedIn"
       name="form"
@@ -10,36 +10,11 @@
         <div class="col-sm" style="align-items: center; justify-content: center;">
           <div class="row align-items-center">
             <div class="header-text mb-4">
-              <h1>Formularz rejestracyjny. Załóż konto w aplikacji!</h1>
+              <h1>Załóż konto w aplikacji!</h1>
               <hr>
               <h2 class="text">Ustaw hasło i zapisz e-mail</h2>
               <mat-divider></mat-divider>
-              <br>
               <h3>Podstawowe dane, potrzebne do założenia konta w aplikacji</h3>
-            </div>
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                name="username"
-                [(ngModel)]="form.username"
-                required
-                minlength="6"
-                maxlength="20"
-                #username="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
-                class="form-control form-control-lg bg-light fs-6"
-                placeholder="Nazwa użytkownika"
-              />
-              <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
-                <div *ngIf="username.errors['required']">Nazwa użytkownika jest wymagana!</div>
-                <div *ngIf="username.errors['minlength']">
-                  Nazwa użytkownika musi mieć co najmniej 6 znaków!
-                </div>
-                <div *ngIf="username.errors['maxlength']">
-                  Nazwa użytkownika moze mieć co najwyżej 20 znaków!
-                </div>
-              </div>
             </div>
             <div class="input-group mb-3">
               <input
@@ -114,26 +89,28 @@
         <div class="row align-items-center">
           <div class="header-text mb-4">
             <h2 class="text">Podaj swoje dane</h2>
-            <h3>Zbierzemy te dane by wysłać wniosek o kartę mieszkańca</h3>
+            <mat-divider></mat-divider>
+
+            <h3>Zbierzemy dane dotyczące twojego profilu studenta</h3>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="pesel"
-                   [(ngModel)]="form.pesel"
-                   #pesel="ngModel"
+            <input type="text" class="form-control" name="indeks"
+                   [(ngModel)]="form.indeks"
+                   #indeks="ngModel"
                    required
                    minlength="11"
                    maxlength="11"
                    class="form-control form-control-lg bg-light fs-6"
-                   [ngClass]="{ 'is-invalid': f.submitted && pesel.errors }"
-                   placeholder="Numer PESEL"
+                   [ngClass]="{ 'is-invalid': f.submitted && indeks.errors }"
+                   placeholder="Numer indeksu"
             />
-            <div class="invalid-feedback" *ngIf="pesel.errors && f.submitted">
-              <div *ngIf="pesel.errors['required']">Pesel jest wymagany!</div>
-              <div *ngIf="pesel.errors['minlength']">
-                Wprowadź poprawny numer pesel
+            <div class="invalid-feedback" *ngIf="indeks.errors && f.submitted">
+              <div *ngIf="indeks.errors['required']">Nr indeksu jest wymagany!</div>
+              <div *ngIf="indeks.errors['minlength']">
+                Wprowadź poprawny numer indeksu
               </div>
-              <div *ngIf="pesel.errors['maxlength']">
-                Wprowadź poprawny numer pesel
+              <div *ngIf="indeks.errors['maxlength']">
+                Wprowadź poprawny numer indeksu
               </div>
             </div>
           </div>
@@ -178,29 +155,6 @@
               </div>
               <div *ngIf="lastName.errors['maxlength']">
                 Wprowadź poprawne nazwisko
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              name="location"
-              required
-              minlength="3"
-              maxlength="20"
-              [(ngModel)]="form.location"
-              #location="ngModel"
-              [ngClass]="{ 'is-invalid': f.submitted && location.errors }"
-              class="form-control form-control-lg bg-light fs-6" placeholder="Miejscowość"
-            />
-            <div class="invalid-feedback" *ngIf="location.errors && f.submitted">
-              <div *ngIf="location.errors['required']">Miejscowość jest wymagana!</div>
-              <div *ngIf="location.errors['minlength']">
-                Wprowadź poprawną miejscowość
-              </div>
-              <div *ngIf="location.errors['maxlength']">
-                Wprowadź poprawną miejscowść
               </div>
             </div>
           </div>
