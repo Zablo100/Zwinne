@@ -24,6 +24,17 @@ public class Student {
     private String nrIndeksu;
     @Column(length = 50, nullable = false, unique = true)
     private String email;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Column(length = 50, nullable = false)
+    private String password;
     @Column(nullable = false)
     private boolean stacjonarny;
 
