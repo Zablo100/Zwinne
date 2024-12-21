@@ -33,7 +33,7 @@ public class Student {
         this.password = password;
     }
 
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private boolean stacjonarny;

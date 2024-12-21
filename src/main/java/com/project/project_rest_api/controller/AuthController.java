@@ -6,10 +6,9 @@ import com.project.project_rest_api.utils.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,27 +31,26 @@ public class AuthController { private final JwtUtil jwtUtil;
         return ResponseEntity.status(401).body("Nieprawidłowe dane logowania");
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> addStudent(
-            @RequestParam("name") String name,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam("indeks") String indeks
+    public ResponseEntity<String> addStudent(@RequestBody Map<String, String> studentData) {
 
 
-    ) {
+
         try {
             Student student = new Student();
-            student.setImie(name);
-            student.setPassword(passwordEncoder.encode(password));
-            student.setEmail(email);
-            student.setNrIndeksu(indeks);
+            student.setImie(studentData.get("name"));
+            student.setNazwisko(studentData.get("lastName"));
+            student.setPassword(passwordEncoder.encode(studentData.get("password")));
+            student.setEmail(studentData.get("email"));
+            student.setNrIndeksu(studentData.get("indeks"));
+            System.out.println("Received data: " + student.getEmail());
             studentRepository.save(student);
             return ResponseEntity.ok("Student uploaded successfully!");
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to upload student!");
         }
     }
+
 
 
 }
