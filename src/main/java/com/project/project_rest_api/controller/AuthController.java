@@ -47,7 +47,7 @@ public class AuthController { private final JwtUtil jwtUtil;
             return ResponseEntity.ok("Student uploaded successfully!");
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to upload student!");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to upload  student!");
         }
     }
 
