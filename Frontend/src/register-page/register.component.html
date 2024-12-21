@@ -1,1 +1,223 @@
-<p>register works!</p>
+  <div class="row border rounded-4 p-3 bg-white shadow box-area" *ngIf="!isLoggedIn">
+    <form
+      *ngIf="!isLoggedIn"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate>
+      <div class="row">
+
+        <div class="col-sm" style="align-items: center; justify-content: center;">
+          <div class="row align-items-center">
+            <div class="header-text mb-4">
+              <h1>Formularz rejestracyjny. Załóż konto w aplikacji!</h1>
+              <hr>
+              <h2 class="text">Ustaw hasło i zapisz e-mail</h2>
+              <mat-divider></mat-divider>
+              <br>
+              <h3>Podstawowe dane, potrzebne do założenia konta w aplikacji</h3>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                minlength="6"
+                maxlength="20"
+                #username="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="Nazwa użytkownika"
+              />
+              <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
+                <div *ngIf="username.errors['required']">Nazwa użytkownika jest wymagana!</div>
+                <div *ngIf="username.errors['minlength']">
+                  Nazwa użytkownika musi mieć co najmniej 6 znaków!
+                </div>
+                <div *ngIf="username.errors['maxlength']">
+                  Nazwa użytkownika moze mieć co najwyżej 20 znaków!
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                email
+                [(ngModel)]="form.email"
+                required
+                #email="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                class="form-control form-control-lg bg-light fs-6" placeholder="Adres email"
+              />
+              <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                <div *ngIf="email.errors['required']">Email is required</div>
+                <div *ngIf="email.errors['email']">
+                  Wprowadź poprawny format adresu email np. jankowalski
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                maxlength="23"
+                minlength="8"
+                #password="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+                class="form-control form-control-lg bg-light fs-6" placeholder="Hasło"
+              />
+              <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+                <div *ngIf="password.errors['required']">Username is required</div>
+                <div *ngIf="password.errors['minlength']">
+                  Hasło musi mieć co najmniej 8 znaków!
+                </div>
+                <div *ngIf="password.errors['maxlength']">
+                  Hasło może mieć co najwyżej 23 znaki!
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                minlength="8"
+                maxlength="23"
+                name="confirmPassword"
+                [(ngModel)]="form.confirmPassword"
+                required
+                #confirmPassword="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors }"
+                class="form-control form-control-lg bg-light fs-6" placeholder="Powtórz hasło"
+              />
+              <div class="invalid-feedback" *ngIf="confirmPassword.errors && f.submitted">
+                <div *ngIf="confirmPassword.errors['required']">Username is required</div>
+                <div *ngIf="confirmPassword.errors['minlength']">
+                  Hasło musi mieć co najmniej 8 znaków!
+                </div>
+                <div *ngIf="confirmPassword.errors['maxlength']">
+                  Hasło może mieć co najwyżej 23 znaki!
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <!--Druga kolumna-->
+        <div class="row align-items-center">
+          <div class="header-text mb-4">
+            <h2 class="text">Podaj swoje dane</h2>
+            <h3>Zbierzemy te dane by wysłać wniosek o kartę mieszkańca</h3>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="pesel"
+                   [(ngModel)]="form.pesel"
+                   #pesel="ngModel"
+                   required
+                   minlength="11"
+                   maxlength="11"
+                   class="form-control form-control-lg bg-light fs-6"
+                   [ngClass]="{ 'is-invalid': f.submitted && pesel.errors }"
+                   placeholder="Numer PESEL"
+            />
+            <div class="invalid-feedback" *ngIf="pesel.errors && f.submitted">
+              <div *ngIf="pesel.errors['required']">Pesel jest wymagany!</div>
+              <div *ngIf="pesel.errors['minlength']">
+                Wprowadź poprawny numer pesel
+              </div>
+              <div *ngIf="pesel.errors['maxlength']">
+                Wprowadź poprawny numer pesel
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="name"
+                   [(ngModel)]="form.name"
+                   #name="ngModel"
+                   required
+                   minlength="3"
+                   maxlength="20"
+                   class="form-control form-control-lg bg-light fs-6"
+                   [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+                   placeholder="Imię"
+            />
+            <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
+              <div *ngIf="name.errors['required']">Imię jest wymagane</div>
+              <div *ngIf="name.errors['minlength']">
+                Wprowadź poprawne imię
+              </div>
+              <div *ngIf="name.errors['maxlength']">
+                Wprowadź poprawne imię
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              name="lastName"
+              required
+              minlength="3"
+              maxlength="20"
+              [(ngModel)]="form.lastName"
+              #lastName="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }"
+              class="form-control form-control-lg bg-light fs-6" placeholder="Nazwisko"
+            />
+            <div class="invalid-feedback" *ngIf="lastName.errors && f.submitted">
+              <div *ngIf="lastName.errors['required']">Nazwisko jest wymagane</div>
+              <div *ngIf="lastName.errors['minlength']">
+                Wprowadź poprawne nazwisko
+              </div>
+              <div *ngIf="lastName.errors['maxlength']">
+                Wprowadź poprawne nazwisko
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              name="location"
+              required
+              minlength="3"
+              maxlength="20"
+              [(ngModel)]="form.location"
+              #location="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && location.errors }"
+              class="form-control form-control-lg bg-light fs-6" placeholder="Miejscowość"
+            />
+            <div class="invalid-feedback" *ngIf="location.errors && f.submitted">
+              <div *ngIf="location.errors['required']">Miejscowość jest wymagana!</div>
+              <div *ngIf="location.errors['minlength']">
+                Wprowadź poprawną miejscowość
+              </div>
+              <div *ngIf="location.errors['maxlength']">
+                Wprowadź poprawną miejscowść
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="row align-items-center">
+        </div>
+        <div class="input-group mb-3">
+          <button class="btn btn-lg w-100 fs-6 but-class">Zarejestruj się</button>
+          <div class="alert alert-danger" *ngIf="f.submitted && isSignUpFailed">
+            Rejestracja nie powiodła się. Wypełnij ponownie!<br />
+          </div>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+
