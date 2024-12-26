@@ -23,12 +23,32 @@ public class AuthController { private final JwtUtil jwtUtil;
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        if ("admin".equals(username) && "password".equals(password)) {
-            String token = jwtUtil.generateToken(username);
-            return ResponseEntity.ok(token);
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        Student student = studentRepository.findByEmail(email);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Użytkownik nie istnieje"));
         }
-        return ResponseEntity.status(401).body("Nieprawidłowe dane logowania");
+
+
+        if (!passwordEncoder.matches(password, student.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Nieprawidłowe hasło"));
+        }
+
+
+        String token = jwtUtil.generateToken(email);
+
+
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "name", student.getImie(),
+                "surname", student.getNazwisko(),
+                "message", "Zalogowano pomyślnie!"
+        ));
     }
     @PostMapping("/signup")
     public ResponseEntity<String> addStudent(@RequestBody Map<String, String> studentData) {
@@ -51,6 +71,11 @@ public class AuthController { private final JwtUtil jwtUtil;
         }
     }
 
-
+    @PostMapping("/signout")
+    public ResponseEntity<Map<String, String>> signout() {
+        return ResponseEntity.ok(Map.of(
+                "message", "Logged out"
+        ));
+    }
 
 }

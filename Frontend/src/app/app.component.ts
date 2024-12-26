@@ -38,6 +38,9 @@ export class AppComponent {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
+  name?: string;
+  surname?: string;
+
 
   eventBusSub?: Subscription;
 
@@ -54,11 +57,14 @@ export class AppComponent {
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
       this.roles = user.roles;
+      this.username = user.username;
+      this.name = user.name;
+      this.surname = user.surname;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
-      this.username = user.username;
+
     }
 
 
@@ -90,7 +96,17 @@ export class AppComponent {
         console.log(res);
         this.storageService.clean();
 
-        window.location.reload();
+        this.isLoggedIn = false;
+        this.showAdminBoard = false;
+        this.showModeratorBoard = false;
+        this.roles = [];
+        this.username = undefined;
+        this.name = undefined;
+        this.surname = undefined;
+
+
+
+        this.router.navigate(['/login']);
       },
       error: err => {
         console.log(err);

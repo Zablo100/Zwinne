@@ -23,7 +23,7 @@ import { MatButtonModule} from '@angular/material/button';
 })
 export class LoginPageComponent implements OnInit{
   form: any = {
-    username: null,
+    email: null,
     password: null
   };
   isLoggedIn = false;
@@ -43,18 +43,21 @@ export class LoginPageComponent implements OnInit{
     }
   }
   onSubmit(): void {
-    const { username, password } = this.form;
+    const { email, password } = this.form;
 
-    this.authService.login(username, password).subscribe({
+    this.authService.login(email, password).subscribe({
       next: data => {
+        console.log('Response from server:', data);
+
         this.storageService.saveUser(data);
+
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
-        this.reloadPage();
 
+        this.router.navigate(['/projekty']);
       },
       error: err => {
+        console.log('Error from server:', err);
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }
