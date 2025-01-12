@@ -47,6 +47,7 @@ public class AuthController { private final JwtUtil jwtUtil;
                 "token", token,
                 "name", student.getImie(),
                 "surname", student.getNazwisko(),
+                "role", student.getRole(),
                 "message", "Zalogowano pomyślnie!"
         ));
     }
@@ -62,6 +63,7 @@ public class AuthController { private final JwtUtil jwtUtil;
             student.setPassword(passwordEncoder.encode(studentData.get("password")));
             student.setEmail(studentData.get("email"));
             student.setNrIndeksu(studentData.get("indeks"));
+            student.setRole("user");
             System.out.println("Received data: " + student.getEmail());
             studentRepository.save(student);
             return ResponseEntity.ok("Student uploaded successfully!");

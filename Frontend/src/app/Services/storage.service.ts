@@ -26,6 +26,11 @@ export class StorageService {
     return null;
   }
 
+  public getRole(): string | null {
+    const user = this.getUser();
+    return user ? user.role : null;
+  }
+
   public isLoggedIn(): boolean {
 
     const user = window.sessionStorage.getItem(USER_KEY);
@@ -36,6 +41,6 @@ export class StorageService {
     return false;
   }
   public logout(): void {
-    window.localStorage.removeItem(USER_KEY);
+    window.sessionStorage.removeItem(USER_KEY);
   }
 }

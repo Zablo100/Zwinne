@@ -25,6 +25,9 @@ public class Student {
     @Column(length = 50, nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String role = "user";
+
     public String getPassword() {
         return password;
     }
@@ -90,6 +93,14 @@ public class Student {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getRole() { // Getter dla roli
+        return role;
+    }
+
+    public void setRole(String role) { // Setter dla roli
+        this.role = role;
     }
 
     public void setEmail(String email) {

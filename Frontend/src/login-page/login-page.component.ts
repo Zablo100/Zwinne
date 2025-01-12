@@ -55,6 +55,7 @@ export class LoginPageComponent implements OnInit{
         this.isLoggedIn = true;
 
         this.router.navigate(['/projekty']);
+
       },
       error: err => {
         console.log('Error from server:', err);

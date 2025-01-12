@@ -6,9 +6,10 @@ import {LoginPageComponent} from "../login-page/login-page.component";
 import {RegisterComponent} from "../register-page/register.component";
 
 export const routes: Routes = [
-    {path: "projekty", component: ProjektListPageComponent },
-    {path: "projekt/:id", component: PrjektPageComponent},
-    {path: "login", component: LoginPageComponent},
-  {path: "register", component: RegisterComponent}
-
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "projekty", component: ProjektListPageComponent },
+  { path: "projekt/:id", component: PrjektPageComponent },
+  { path: "login", component: LoginPageComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "**", redirectTo: "login" }
 ];

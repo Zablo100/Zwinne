@@ -73,10 +73,11 @@ public class ProjektController {
         return projektService.getProjekty(pageable);
     }
 
-//    @GetMapping(value = "/projekty", params="nazwa")
-//    Page<Projekt> getProjektyByNazwa(@RequestParam(name="nazwa") String nazwa, Pageable pageable) {
-//        return projektService.searchByNazwa(nazwa, pageable);
-//    }
+    @GetMapping(value = "/projekty", params = "name")
+    public Page<Projekt> getFilteredProjects(@RequestParam(name = "name") String name, Pageable pageable) {
+        return projektService.searchByNazwa(name, pageable);
+    }
+
 
     @PostMapping("projekt/{projektId}/studenci/{studentId}")
     public ResponseEntity<Void> assigneStudent(@PathVariable Integer projektId, @PathVariable Integer studentId) {

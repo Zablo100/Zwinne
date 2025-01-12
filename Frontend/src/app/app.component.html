@@ -19,6 +19,7 @@
   <mat-sidenav #sidenav="matSidenav" class="shadow">
     <span class="title" *ngIf="isLoggedIn">Witaj, {{name}} {{surname}}</span>
     <mat-divider></mat-divider>
+
     <button mat-button *ngIf="showAdminBoard" routerLink="admin">
       <mat-icon>admin_panel_settings</mat-icon>
       <span>ADMIN TEST</span>
@@ -27,14 +28,11 @@
       <mat-icon>home</mat-icon>
       <span>Lista projektów</span>
     </button>
-    <button mat-button class="menu-button" routerLink="twojeProjekty">
+    <button mat-button class="menu-button" routerLink="twojeProjekty" *ngIf="isLoggedIn">
       <mat-icon>info</mat-icon>
       <span>Twoje projekty</span>
     </button>
-    <button mat-button class="menu-button" routerLink="infoPage">
-      <mat-icon>contact_page</mat-icon>
-      <span>Kontakt</span>
-    </button>
+
        <button mat-button class="menu-button" *ngIf="!isLoggedIn" routerLink="login">
       <mat-icon>login</mat-icon>
       <span>Zaloguj się</span>
@@ -43,10 +41,16 @@
       <mat-icon>supervised_user_circle</mat-icon>
       <span>Załóż konto</span>
     </button>
+    <button mat-button class="menu-button" routerLink="infoPage">
+      <mat-icon>contact_page</mat-icon>
+      <span>Kontakt</span>
+    </button>
     <button mat-button class="menu-button" (click)="logout()" *ngIf="isLoggedIn">
       <mat-icon>logout</mat-icon>
       <span>Wyloguj się</span>
     </button>
+
+
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z4">

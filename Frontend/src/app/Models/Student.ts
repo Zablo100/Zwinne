@@ -4,5 +4,6 @@ export interface StudentModel{
     nazwisko: string,
     nrIndeksu: string,
     email: string,
-    stacjonarny: boolean
+    stacjonarny: boolean,
+    role: string
 }

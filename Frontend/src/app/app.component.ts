@@ -33,7 +33,7 @@ import {MatButtonModule} from "@angular/material/button";
 export class AppComponent {
   title = 'Frontend';
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  private roles: string[] = [];
+  private role: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -56,13 +56,13 @@ export class AppComponent {
 
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
-      this.roles = user.roles;
+      this.role = user.role;
       this.username = user.username;
       this.name = user.name;
       this.surname = user.surname;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.showAdminBoard = this.role.includes('admin');
+      this.showModeratorBoard = this.role.includes('ROLE_MODERATOR');
 
 
     }
@@ -70,7 +70,7 @@ export class AppComponent {
 
   }
   isAdmin(){
-    if(this.roles.includes("ROLE_ADMIN")){
+    if(this.role.includes("admin")){
       return true;
     }
     else{
@@ -91,6 +91,7 @@ export class AppComponent {
     });
   }
   logout(): void {
+    this.storageService.logout();
     this.authService.logout().subscribe({
       next: res => {
         console.log(res);
@@ -99,7 +100,7 @@ export class AppComponent {
         this.isLoggedIn = false;
         this.showAdminBoard = false;
         this.showModeratorBoard = false;
-        this.roles = [];
+        this.role = [];
         this.username = undefined;
         this.name = undefined;
         this.surname = undefined;
