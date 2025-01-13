@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit{
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string[] = [];
+  role: string = '';
 
   constructor(
     private router: Router,
@@ -39,7 +39,12 @@ export class LoginPageComponent implements OnInit{
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      const user = this.storageService.getUser();
+      if (user) {
+        this.role = user.role;
+      } else {
+        console.error('Nie udało się pobrać danych użytkownika.');
+      }
     }
   }
   onSubmit(): void {

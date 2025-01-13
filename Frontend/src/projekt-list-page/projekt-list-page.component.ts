@@ -10,8 +10,22 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+
+
+import { StorageService } from "../app/Services/storage.service";
+
+import { ProjektModalAdminComponent } from '../projekt-modal-admin/projekt-modal-admin.component';
+import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user-modal';
+
+
 
 @Component({
   selector: 'app-projekt-list-page',
@@ -20,14 +34,19 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     MatTableModule,
     RouterModule,
-    PrjektPageComponent,
     RouterLink,
     MatButton,
     MatPaginatorModule,
     MatTableModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    CommonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+
   ],
   templateUrl: './projekt-list-page.component.html',
   styleUrl: './projekt-list-page.component.css'
@@ -35,7 +54,8 @@ import { MatInputModule } from '@angular/material/input';
 export class ProjektListPageComponent {
   colNames = ["nazwa", "dataczasUtworzenia", "dataOddania", "iloscStudentow", "akcja" ]
   Projekty: ProjektModel[] = []
-
+  role: string;
+  isLoggedIn = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageIndex: number = 0;
@@ -44,7 +64,7 @@ export class ProjektListPageComponent {
 
   searchForm: FormGroup;
 
-  constructor(private service: ProjektService, private fb: FormBuilder){
+  constructor(private service: ProjektService, private fb: FormBuilder, private storageService: StorageService,private dialog: MatDialog ){
     this.searchForm = this.fb.group({
       name: [''],
       startDate: [''],
@@ -53,6 +73,22 @@ export class ProjektListPageComponent {
   }
 
   ngOnInit() {
+    this.isLoggedIn = this.storageService.isLoggedIn();
+
+    if (this.isLoggedIn) {
+      const user = this.storageService.getUser();
+      if (user) {
+        this.role = user.role;
+        console.log(`Zalogowano jako: ${this.role}`);
+      } else {
+        console.error('Nie udało się pobrać danych użytkownika.');
+      }
+    }
+
+    if (this.role === 'admin') {
+      this.colNames = [...this.colNames, 'admin'];
+    }
+
     this.searchForm.get('name')?.valueChanges.pipe(
       debounceTime(300),
       switchMap(name => this.service.getFilteredProjects(name, this.pageIndex, this.pageSize))
@@ -70,6 +106,10 @@ export class ProjektListPageComponent {
     this.loadProjects(this.pageIndex, this.pageSize);
   }
 
+  isAdmin(): boolean {
+    return this.role === 'admin';
+  }
+
   loadFilteredProjects(values: any) {
     const { name, startDate, endDate } = values;
     return this.service.getFilteredProjects(name, this.pageIndex, this.pageSize);
@@ -82,7 +122,7 @@ export class ProjektListPageComponent {
         this.totalElements = response.totalElements;
       },
       error: error => {
-        console.error('Błąd przy ładowaniu projektów:', error);
+        console.error('Błąd przy ładowaniu projektówww:', error);
       }
     });
   }
@@ -113,4 +153,45 @@ export class ProjektListPageComponent {
     console.log(id)
   }
 
+/*
+  openAssignUserModal(projektId: number): void {
+    const dialogRef = this.dialog.open(AssignUserModalComponent, {
+      data: { projektId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.service.assignStudentToProjekt(result.projektId, result.studentId).subscribe({
+          next: () => {
+            alert('Student został przypisany do projektu!');
+          },
+          error: (err: any) => {
+            console.error('Błąd podczas przypisywania studenta:', err);
+            alert('Wystąpił błąd przy przypisywaniu studenta.');
+          }
+        });
+      }
+    });
+  }
+*/
+
+  openAdminModal(projektId: number): void {
+    const dialogRef = this.dialog.open(ProjektModalAdminComponent, {
+      data: { projektId },
+      disableClose: true,
+      width: '1200px',
+      height: '1200px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.deleted) {
+
+        this.loadProjects(this.pageIndex, this.pageSize);
+      }
+    });
+  }
+
+
 }
+
+

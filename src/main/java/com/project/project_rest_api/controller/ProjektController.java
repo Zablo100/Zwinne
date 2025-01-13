@@ -85,5 +85,15 @@ public class ProjektController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/projekt/{projektId}/studenci/{studentId}")
+    public ResponseEntity<Void> removeStudentFromProjekt(@PathVariable Integer projektId, @PathVariable Integer studentId) {
+        Optional<Projekt> projektOptional = projektService.getProjekt(projektId);
+        if (projektOptional.isPresent()) {
+            projektService.removeStudentFromProjekt(projektId, studentId);
+            return new ResponseEntity<>(HttpStatus.OK); // 200 OK
+        }
+        return ResponseEntity.notFound().build(); // 404 Not Found
+    }
+
 
 }

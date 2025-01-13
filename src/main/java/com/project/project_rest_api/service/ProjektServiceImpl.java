@@ -84,4 +84,19 @@ public class ProjektServiceImpl implements ProjektService {
                     return new ProjektWithTasks(projekt, zadania);
                 });
     }
+
+    @Override
+    public void removeStudentFromProjekt(Integer projektId, Integer studentId) {
+        Projekt projekt = projektRepository.findById(projektId)
+                .orElseThrow(() -> new RuntimeException("Projekt nie znaleziony"));
+
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student nie znaleziony"));
+
+
+        projekt.getStudenci().remove(student);
+
+
+        projektRepository.save(projekt);
+    }
 }

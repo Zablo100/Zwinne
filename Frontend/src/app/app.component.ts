@@ -33,7 +33,7 @@ import {MatButtonModule} from "@angular/material/button";
 export class AppComponent {
   title = 'Frontend';
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  private role: string[] = [];
+  private role: string = '';
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -56,26 +56,25 @@ export class AppComponent {
 
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
-      this.role = user.role;
-      this.username = user.username;
-      this.name = user.name;
-      this.surname = user.surname;
+      console.log('Pobrane dane użytkownika:', user);
 
-      this.showAdminBoard = this.role.includes('admin');
-      this.showModeratorBoard = this.role.includes('ROLE_MODERATOR');
+      if (user) {
+        this.role = user.role;
+        this.username = user.username;
+        this.name = user.name;
+        this.surname = user.surname;
 
-
+        this.showAdminBoard = this.role.includes('admin');
+        this.showModeratorBoard = this.role.includes('ROLE_MODERATOR');
+      } else {
+        console.error('Nie udało się pobrać danych użytkownika.');
+      }
     }
 
 
   }
-  isAdmin(){
-    if(this.role.includes("admin")){
-      return true;
-    }
-    else{
-      return false;
-    }
+  isAdmin() {
+    return this.role === 'admin';
   }
 
   ngAfterViewInit(){
@@ -100,7 +99,7 @@ export class AppComponent {
         this.isLoggedIn = false;
         this.showAdminBoard = false;
         this.showModeratorBoard = false;
-        this.role = [];
+        this.role = '';
         this.username = undefined;
         this.name = undefined;
         this.surname = undefined;

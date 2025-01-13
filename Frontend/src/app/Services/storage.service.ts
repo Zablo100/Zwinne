@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 
 const USER_KEY = 'auth-user';
 
+export interface user {
+  role: string;
+  username: string;
+  name: string;
+  surname: string;
+
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,13 +26,9 @@ export class StorageService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  public getUser(): any {
+  public getUser(): user | null {
     const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
-    return null;
+    return user ? JSON.parse(user) : null;
   }
 
   public getRole(): string | null {
@@ -32,15 +37,15 @@ export class StorageService {
   }
 
   public isLoggedIn(): boolean {
-
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {
       return true;
     }
-
     return false;
   }
+
   public logout(): void {
     window.sessionStorage.removeItem(USER_KEY);
   }
+
 }

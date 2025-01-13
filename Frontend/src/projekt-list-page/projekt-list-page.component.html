@@ -47,22 +47,32 @@
     </td>
   </ng-container>
 
+
   <!-- Akcja Column -->
   <ng-container matColumnDef="akcja">
     <th mat-header-cell *matHeaderCellDef> Akcja </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button class="button-rounded" [routerLink]="['/projekt/', element.projektId]">Otwórz projekt</button>
+      <button mat-raised-button color="primary" [routerLink]="['/projekt/', element.projektId]">
+        Otwórz projekt
+      </button>
     </td>
   </ng-container>
 
+  <!-- Admin Column -->
+  <ng-container matColumnDef="admin">
+    <th mat-header-cell *matHeaderCellDef> Admin </th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="openAdminModal(element.projektId)"
+      >
+        Edytuj
+      </button>
+    </td>
+  </ng-container>
 
-
-  <!-- Definicja wierszy -->
-
+  <!-- Header and Row Definitions -->
   <tr mat-header-row *matHeaderRowDef="colNames"></tr>
   <tr mat-row *matRowDef="let row; columns: colNames;"></tr>
-  <tr *ngIf="Projekty.length === 0">
-    <td colspan="5">Brak wyników do wyświetlenia</td>
-  </tr>
-
 </table>

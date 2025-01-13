@@ -1,0 +1,65 @@
+.mat-dialog-container {
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.project-card,
+.students-card {
+  margin-bottom: 20px;
+}
+
+mat-card-title {
+  font-weight: bold;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+.snackbar-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.snackbar-info {
+  background-color: #2196f3;
+  color: white;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.action-item p {
+  margin: 0;
+  font-weight: bold;
+  flex: 1;
+}
+
+button {
+  margin-left: 20px;
+}

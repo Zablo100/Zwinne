@@ -16,4 +16,6 @@ public interface ProjektService {
     Page<Projekt> searchByNazwa(String nazwa, Pageable pageable);
     Projekt addStudentToProjekt(Integer projektId, Integer studentId);
     Optional<ProjektWithTasks> getProjektWithTasks(Integer projektId);
+    void removeStudentFromProjekt(Integer projektId, Integer studentId);
+
 }

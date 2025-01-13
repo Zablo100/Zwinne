@@ -32,14 +32,19 @@ export class RegisterComponent implements OnInit{
   errorMessage = '';
   isLoggedIn = false;
   isLoginFailed = false;
-  roles: string[] = [];
+  role: string = '';
 
   constructor(private router: Router, private authService: AuthService, private storageService: StorageService) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      const user = this.storageService.getUser();
+      if (user) {
+        this.role = user.role;
+      } else {
+        console.error('Nie udało się pobrać danych użytkownika.');
+      }
     }
   }
 
