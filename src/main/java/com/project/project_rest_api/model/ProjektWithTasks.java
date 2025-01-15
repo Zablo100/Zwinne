@@ -23,8 +23,10 @@ public class ProjektWithTasks{
     private Set<Student> studenci;
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private List<Zadanie> zadania;
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    private List<FileProject> files;
 
-    public ProjektWithTasks(Projekt projekt, List<Zadanie> zadania) {
+    public ProjektWithTasks(Projekt projekt, List<Zadanie> zadania, List<FileProject> files) {
         this.projektId = projekt.getProjektId();
         this.nazwa = projekt.getNazwa();
         this.opis = projekt.getOpis();
@@ -32,6 +34,7 @@ public class ProjektWithTasks{
         this.dataczasUtworzenia = projekt.getdataczasUtworzenia();
         this.dataOddania = projekt.getDataOddania();
         this.studenci = projekt.getStudenci();
+        this.files = files;
 
     }
 }

@@ -51,8 +51,9 @@
   <ng-container matColumnDef="iloscStudentow">
     <th mat-header-cell *matHeaderCellDef> Liczba studentów </th>
     <td mat-cell *matCellDef="let element">
-      {{getNumberOfStudents(element.studenci)}}
+      {{getNumberOfStudents(element.studenci || [])}}
     </td>
+
   </ng-container>
 
 

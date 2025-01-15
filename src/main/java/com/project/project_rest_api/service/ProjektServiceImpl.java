@@ -1,12 +1,10 @@
 package com.project.project_rest_api.service;
 
+import com.project.project_rest_api.datasource.FilesRepository;
 import com.project.project_rest_api.datasource.ProjektRepository;
 import com.project.project_rest_api.datasource.StudentRepository;
 import com.project.project_rest_api.datasource.ZadanieRepository;
-import com.project.project_rest_api.model.Projekt;
-import com.project.project_rest_api.model.ProjektWithTasks;
-import com.project.project_rest_api.model.Student;
-import com.project.project_rest_api.model.Zadanie;
+import com.project.project_rest_api.model.*;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +22,14 @@ public class ProjektServiceImpl implements ProjektService {
     private final StudentRepository studentRepository;
     private ProjektRepository projektRepository;
     private ZadanieRepository zadanieRepository;
+    private FilesRepository filesRepository;
 
     @Autowired
-    public ProjektServiceImpl(ProjektRepository projektRepository, ZadanieRepository zadanieRepository, StudentRepository studentRepository) {
+    public ProjektServiceImpl(ProjektRepository projektRepository, ZadanieRepository zadanieRepository, StudentRepository studentRepository, FilesRepository filesRepository) {
         this.projektRepository = projektRepository;
         this.zadanieRepository = zadanieRepository;
         this.studentRepository = studentRepository;
+        this.filesRepository = filesRepository;
     }
 
 
@@ -43,7 +43,15 @@ public class ProjektServiceImpl implements ProjektService {
         projektRepository.save(projekt);
         return projekt;
     }
-
+    @Override
+    public FileProject addFileToProject(Integer projektId, String filePath) {
+        Projekt projekt = projektRepository.findById(projektId)
+                .orElseThrow(() -> new RuntimeException("Projekt o podanym ID nie istnieje!"));
+        FileProject file = new FileProject();
+        file.setSciezka(filePath);
+        file.setProjekt(projekt);
+        return filesRepository.save(file);
+    }
     @Override
     @Transactional
     public void deleteProjekt(Integer projektId) {
@@ -81,7 +89,8 @@ public class ProjektServiceImpl implements ProjektService {
         return projektRepository.findById(projektId)
                 .map(projekt -> {
                     List<Zadanie> zadania = zadanieRepository.findZadaniaProjektu(projektId);
-                    return new ProjektWithTasks(projekt, zadania);
+                    List<FileProject> files = filesRepository.findPlikiProjektu(projektId);
+                    return new ProjektWithTasks(projekt, zadania, files);
                 });
     }
 

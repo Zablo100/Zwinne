@@ -1,10 +1,15 @@
 package com.project.project_rest_api.controller;
 
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
+import java.nio.file.Files;
 
+import com.project.project_rest_api.datasource.ProjektRepository;
+import com.project.project_rest_api.model.FileProject;
 import com.project.project_rest_api.model.ProjektWithTasks;
-import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.project.project_rest_api.model.Projekt;
 import com.project.project_rest_api.service.ProjektService;
@@ -24,12 +29,13 @@ import com.project.project_rest_api.service.ProjektService;
 public class ProjektController {
     private final ProjektService projektService;
     private final StudentService studentService;
+    private final ProjektRepository projektRepository;
 
     @Autowired
-    public ProjektController(ProjektService projektService, StudentService studentService) {
+    public ProjektController(ProjektService projektService, StudentService studentService, ProjektRepository projektRepository) {
         this.projektService = projektService;
         this.studentService = studentService;
-
+        this.projektRepository = projektRepository;
     }
 
     @GetMapping("/projekty/{projektId}")
@@ -49,6 +55,7 @@ public class ProjektController {
 
         return ResponseEntity.created(location).build();
     }
+
 
     @PutMapping("/projekty/{projektId}")
     public ResponseEntity<Void> updateProjekt(@PathVariable Integer projektId, @Valid @RequestBody Projekt projekt) {

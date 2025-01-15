@@ -94,8 +94,10 @@ export class ProjektListPageComponent {
       switchMap(name => this.service.getFilteredProjects(name, this.pageIndex, this.pageSize))
     ).subscribe({
       next: response => {
-        this.Projekty = response.content;
-        this.totalElements = response.totalElements;
+        if (response && response.content) {
+          this.Projekty = response.content;
+          this.totalElements = response.totalElements;
+        }
       },
       error: error => {
         console.error('Błąd podczas wyszukiwania projektów:', error);
@@ -106,26 +108,51 @@ export class ProjektListPageComponent {
     this.loadProjects(this.pageIndex, this.pageSize);
   }
 
+
   isAdmin(): boolean {
     return this.role === 'admin';
   }
 
   loadFilteredProjects(values: any) {
     const { name, startDate, endDate } = values;
-    return this.service.getFilteredProjects(name, this.pageIndex, this.pageSize);
+    return this.service.getFilteredProjects(name, this.pageIndex, this.pageSize).subscribe({
+      next: response => {
+        if (response && response.content) {
+          this.Projekty = response.content;
+          this.totalElements = response.totalElements;
+        } else {
+          console.error('Odpowiedź nie zawiera projektów.');
+        }
+      },
+      error: error => {
+        console.error('Błąd przy ładowaniu projektów:', error);
+      }
+    });
   }
+
 
   loadProjects(page: number, size: number) {
     this.service.getFilteredProjects('', page, size).subscribe({
       next: response => {
-        this.Projekty = response.content;
-        this.totalElements = response.totalElements;
+        if (response && response.content) {
+          // Sprawdź, czy każdy projekt zawiera pole `studenci`
+          this.Projekty = response.content.map(project => {
+            if (!project.studenci) {
+              console.warn(`Brak studentów w projekcie ${project.projektId}`);
+            }
+            return project;
+          });
+          this.totalElements = response.totalElements;
+        } else {
+          console.error('Brak danych w odpowiedzi');
+        }
       },
       error: error => {
-        console.error('Błąd przy ładowaniu projektówww:', error);
+        console.error('Błąd przy ładowaniu projektów:', error);
       }
     });
   }
+
 
   onPageChange(event: any) {
     this.pageIndex = event.pageIndex;
@@ -145,8 +172,9 @@ export class ProjektListPageComponent {
     this.totalElements = response.totalElements;
     this.pageIndex = response.pageable.pageNumber;
   }
-  getNumberOfStudents(studenci: StudentModel[]){
-    return studenci.length
+  getNumberOfStudents(studenci: StudentModel[]): number {
+    console.log('Dane studentów:', studenci);  // Dodaj logowanie
+    return studenci && studenci.length ? studenci.length : 0;
   }
 
   showId(id: any){

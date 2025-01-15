@@ -1,4 +1,5 @@
 package com.project.project_rest_api.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -43,6 +44,8 @@ public class Student {
 
     @ManyToMany(mappedBy = "studenci")
     @JsonIgnoreProperties({"studenci"})
+    @JsonBackReference
+
     private Set<Projekt> projekty;
 
     public Student() {}

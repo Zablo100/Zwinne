@@ -15,6 +15,7 @@ import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule} f
 import {MatIconModule} from "@angular/material/icon";
 import { AssignUserModalComponent } from './app-assign-user-modal';
 import { MatDialog } from '@angular/material/dialog';
+import {AuthService} from "../app/Services/auth.service";
 
 @Component({
   imports: [
@@ -56,9 +57,12 @@ export class ProjektModalAdminComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ProjektModalAdminComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { projektId: number },
+    private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      projektId: number;
+    },
     private projektModalAdminService: ProjektModalAdminService,
-    private snackBar: MatSnackBar,private dialog: MatDialog) {}
+    private snackBar: MatSnackBar,private dialog: MatDialog,) {}
   onFileChanged(event:any) {
     this.selectedFile = event.target.files[0];
   }
@@ -70,6 +74,23 @@ export class ProjektModalAdminComponent implements OnInit {
       panelClass: [`snackbar-${type}`],
     });
   }
+  onUpload() {
+    const formData: FormData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('projektId', this.data.projektId.toString());
+
+    this.authService.addFileToProject(formData).subscribe(
+      (response) => {
+        console.log('Plik dodany:', response);
+        this.showNotification('Plik został pomyślnie dodany!', 'success');
+      },
+      (error) => {
+        console.error('Błąd podczas dodawania pliku:', error);
+        this.showNotification('Wystąpił błąd podczas dodawania pliku.', 'error');
+      }
+    );
+  }
+
 
   ngOnInit(): void {
     this.loadProjectDetails();

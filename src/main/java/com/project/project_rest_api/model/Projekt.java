@@ -1,11 +1,13 @@
 package com.project.project_rest_api.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.validation.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -42,11 +44,16 @@ public class Projekt {
     //@JsonIgnoreProperties({"projekt"})
     private List<Zadanie> zadania;
 
+    @OneToMany(mappedBy = "projekt", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<FileProject> pliki;
 
     @ManyToMany
     @JoinTable(name = "projekt_student",
             joinColumns = {@JoinColumn(name="projekt_id")},
             inverseJoinColumns = {@JoinColumn(name="student_id")})
+    @JsonManagedReference
+
     private Set<Student> studenci;
 
     public Integer getProjektId() {
@@ -68,7 +75,12 @@ public class Projekt {
     public LocalDateTime getdataczasUtworzenia() {
         return dataczasUtworzenia;
     }
-
+    public void setPliki(List<FileProject> pliki) {
+        this.pliki = pliki;
+    }
+    public List<FileProject> getPliki() {
+        return pliki;
+    }
     public void setdataczasUtworzenia(LocalDateTime dataczas_utworzenia) {
         this.dataczasUtworzenia = dataczas_utworzenia;
     }
