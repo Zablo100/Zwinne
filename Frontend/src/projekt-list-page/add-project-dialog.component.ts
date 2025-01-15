@@ -21,7 +21,6 @@ registerLocaleData(localePl);
   templateUrl: './add-project-dialog.component.html',
   standalone: true,
   providers: [
-    {},
     { provide: LOCALE_ID, useValue: 'pl-PL' },
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
   ],
