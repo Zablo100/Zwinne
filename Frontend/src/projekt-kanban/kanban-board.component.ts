@@ -100,7 +100,7 @@ export class KanbanBoardComponent {
       .patch<void>(`${this.BASE_URL}/zadania/${taskId}/status`, newStatus, { headers }) // Wysyłamy tylko tekst
       .pipe(
         catchError((error) => {
-          console.error('Błąd podczas aktualizacji statusu zadania:', error);
+          console.error('Błąd podczas aktualizacji statusu zadaniaa:', error);
           return throwError(error);
         })
       );
