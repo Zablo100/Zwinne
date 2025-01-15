@@ -1,46 +1,61 @@
 <mat-card style="padding: 20px 20px 20px 20px">
-  <h1>  <img src="https://cdn-icons-png.flaticon.com/512/6404/6404259.png" alt="Projekt Ikona" width="40" height="40"> | Projekt: {{this.Projekt.nazwa}}</h1>
+  <h1>
+    <img src="https://cdn-icons-png.flaticon.com/512/6404/6404259.png" alt="Projekt Ikona" width="40" height="40">
+    | Projekt: {{ this.Projekt.nazwa }}
+  </h1>
   <mat-divider></mat-divider>
   <br>
-    <section class="project-info">
-      <h2>Opis Projektu</h2>
-      <p>{{this.Projekt.opis}}</p>
-    </section>
-    <section class="project-dates">
-      <p><strong>Data Utworzenia:</strong> {{this.Projekt.dataczasUtworzenia}}</p>
-      <p><strong>Data Oddania:</strong> {{this.Projekt.dataOddania}}</p>
-    </section>
-    <!-- Lista Studentów -->
-  <br>
-  <mat-divider></mat-divider>
-  <br>
-    <section class="project-students">
-      <h2>Studenci przypisani do projektu</h2>
-      <ul>
-        <li *ngFor="let student of Projekt.studenci">{{student.imie}} {{student.nazwisko}} <a href="mailto:{{student.email}}">{{student.email}}</a></li>
-      </ul>
-    </section>
-
-    <!-- Lista Zadań -->
-  <br>
-  <mat-divider></mat-divider>
-  <br>
-    <section class="project-tasks">
-      <h2>Lista Zadań</h2>
-      <ul>
-        <li *ngFor="let zadanie of Zadania"><strong style="color:#3a506b">[{{zadanie.dataCzasOddania}}]</strong> &nbsp;<b>{{zadanie.nazwa}}</b> - {{zadanie.opis}} </li>
-      </ul>
-    </section>
-  <!-- Wyświetlanie tablicy Kanban, jeśli są zadania -->
-  <section *ngIf="hasTasks()" class="kanban-board">
-    <h2>Tablica Kanban</h2>
-    <app-kanban-board [tasks]="Zadania"></app-kanban-board>
+  <section class="project-info">
+    <h2>Opis Projektu</h2>
+    <p>{{ this.Projekt.opis }}</p>
+  </section>
+  <section class="project-dates">
+    <p><strong>Data Utworzenia:</strong> {{ this.Projekt.dataczasUtworzenia }}</p>
+    <p><strong>Data Oddania:</strong> {{ this.Projekt.dataOddania }}</p>
   </section>
 
-  <!-- Informacja o braku zadań -->
-  <section *ngIf="!hasTasks()" class="no-tasks">
-    <h2>Brak zadań w tym projekcie.</h2>
+  <!-- Lista Studentów -->
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <section class="project-students">
+    <h2>Studenci przypisani do projektu</h2>
+    <ul>
+      <li *ngFor="let student of Projekt.studenci">
+        {{ student.imie }} {{ student.nazwisko }} <a href="mailto:{{ student.email }}">{{ student.email }}</a>
+      </li>
+    </ul>
   </section>
 
+  <!-- Lista Zadań -->
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <section class="project-tasks">
+    <h2>Lista Zadań</h2>
+    <ul>
+      <li *ngFor="let zadanie of Zadania">
+        <strong style="color:#3a506b">[{{ zadanie.dataCzasOddania }}]</strong> &nbsp;
+        <b>{{ zadanie.nazwa }}</b> - {{ zadanie.opis }}
+      </li>
+    </ul>
+  </section>
 
+  <!-- Lista Plików -->
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <section class="project-tasks">
+    <h2>Załączone Pliki</h2>
+    <ul>
+      <li *ngFor="let plik of Pliki">
+        <button mat-button color="primary" class="pdf-button" (click)="downloadFile(plik.sciezka)">
+          <mat-icon aria-hidden="true" svgIcon="pdf_icon"></mat-icon>
+          {{ plik.sciezka }}
+        </button>
+      </li>
+    </ul>
+    <p *ngIf="Pliki?.length === 0">Brak załączonych plików.</p>
+    <p *ngIf="Pliki?.length === undefined">Brak danych o plikach.</p> <!-- Dodatkowy warunek na undefined -->
+  </section>
 </mat-card>

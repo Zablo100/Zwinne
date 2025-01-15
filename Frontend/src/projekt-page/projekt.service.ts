@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProjektWithTaskModel } from '../app/Models/Projekt';
-import { catchError, tap, throwError } from 'rxjs';
+import {catchError, Observable, tap, throwError} from 'rxjs';
 import { PageableResponse } from '../app/Models/Pageable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjektService {
+  private baseUrl = 'http://localhost:8080/file/api'; // URL do Twojego API (zmień, jeśli potrzebujesz)
 
   constructor(private http: HttpClient) { }
 
@@ -25,4 +26,12 @@ export class ProjektService {
       })
     );
   }
+  downloadFile(fileName: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:admin') // Dodaj nagłówki uwierzytelniania
+    });
+
+    return this.http.get(`${this.baseUrl}/files/${fileName}`, { headers, responseType: 'blob' });
+  }
+
 }

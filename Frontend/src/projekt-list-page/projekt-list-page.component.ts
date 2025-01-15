@@ -18,14 +18,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { AddProjectDialogComponent } from './add-project-dialog.component';
 
 
 import { StorageService } from "../app/Services/storage.service";
 
 import { ProjektModalAdminComponent } from '../projekt-modal-admin/projekt-modal-admin.component';
 import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user-modal';
-import {MatIcon} from "@angular/material/icon";
+import {AddProjectDialogComponent} from "./add-project-dialog.component";
 
 
 
@@ -48,7 +47,6 @@ import {MatIcon} from "@angular/material/icon";
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
-    MatIcon,
 
   ],
   templateUrl: './projekt-list-page.component.html',
@@ -193,7 +191,6 @@ export class ProjektListPageComponent {
       }
     });
   }
-
   openAddProjectDialog(): void {
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '400px',
@@ -212,6 +209,7 @@ export class ProjektListPageComponent {
       }
     });
   }
+
 
 
 }

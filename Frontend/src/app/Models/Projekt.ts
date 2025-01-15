@@ -11,6 +11,8 @@ export interface ProjektModel{
 
 export interface ProjektWithTaskModel extends ProjektModel{
     zadania: ZadanieModel[]
+    files: FileProjectModel[];  // Nowe pole na pliki
+
 }
 
 export interface ZadanieModel{
@@ -20,4 +22,8 @@ export interface ZadanieModel{
     opis: string,
     dataCzasOddania: string;
     status?: 'backlog' | 'todo' | 'in-progress' | 'done';
+}
+export interface FileProjectModel{
+  fileId: number,
+  sciezka: string;
 }

@@ -42,12 +42,10 @@ public class ProjektController {
 
     @PostMapping("/projekty")
     public ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
-
-
-        Projekt createdProejkt = projektService.setProjekt(projekt);
+        Projekt newProject = projektService.setProjekt(projekt);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{projektId}").buildAndExpand(createdProejkt.getProjektId()).toUri();
+                .path("/{projektId}").buildAndExpand(newProject.getProjektId()).toUri();
 
         return ResponseEntity.created(location).build();
     }

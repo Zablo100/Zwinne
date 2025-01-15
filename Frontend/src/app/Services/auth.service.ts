@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from "rxjs/operators";
 
 const AUTH_API = 'http://localhost:8080/auth/';
 
@@ -28,6 +29,26 @@ export class AuthService {
       httpOptions
     );
   }
+  private getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      Authorization: 'Basic ' + btoa('admin:admin'),
+    });
+  }
+  addFileToProject(formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Basic ' + btoa('admin:admin')
+    });
+
+    return this.http.post<any>('http://localhost:8080/file/addFile', formData, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Błąd podczas wysyłania pliku:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+
 
   getJwtToken(): string | null {
     const cookies = document.cookie.split(';');

@@ -11,6 +11,12 @@
 
     <!-- Zakładka: Studenci -->
     <mat-tab label="Studenci"><br>
+      <div class="action-item">
+        <button mat-raised-button color="primary" (click)="openAssignUserModal()">
+          Przypisz studenta
+        </button>
+      </div>
+      <br>
       <h2>Lista studentów przypisanych do projektu</h2>
       <div *ngIf="assignedStudents.length > 0; else noStudents">
         <table mat-table [dataSource]="assignedStudents" class="mat-elevation-z8">
@@ -45,20 +51,14 @@
     <!-- Zakładka: Zaawansowane -->
     <mat-tab label="Zaawansowane">
       <div class="actions-container">
-        <div class="action-item">
-          <br>
-          <strong>   Jako administrator możesz dodawać studentów do projektu.
-            Kliknij poniższy przycisk aby dodać studenta do projektu.</strong>
-          <br>
-          <button mat-raised-button color="primary" (click)="openAssignUserModal()">
-            Przypisz studenta
-          </button>
-        </div>
+
         <br>
         <div class="mb-3">
           <label  class="form-label">Dołącz plik do projektu</label>
-          <input class="form-control" type="file" id="file" accept="pdf, image/png" (change)="onFileChanged($event)">
+          <input class="form-control" type="file" id="file" accept="application/pdf, image/png" (change)="onFileChanged($event)">
         </div>
+        <button type="submit" (click)="onUpload()"  (change)="onFileChanged($event)" class="btn btn-primary">Wyślij plik</button>
+        <br>
         <br>
         <div class="action-item">
           <strong>   Jako administrator możesz także usuwać projekty.
