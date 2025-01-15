@@ -55,7 +55,13 @@ table.mat-table {
 .button-rounded.mat-raised-button,
 .button-rounded.mat-flat-button,
 .button-rounded.mat-stroked-button {
-  border-radius: 25% / 50%; /* Zaokrąglony przycisk */
+  border-radius: 25% / 50%;
+}
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 .search-form {
   padding: 16px; /* Odstęp wewnętrzny od krawędzi formularza */

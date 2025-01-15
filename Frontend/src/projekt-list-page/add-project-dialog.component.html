@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Dodaj projekt</h2>
+<mat-dialog-content>
+  <form [formGroup]="projectForm">
+    <!-- Nazwa projektu -->
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa projektu</mat-label>
+      <input matInput formControlName="nazwa" required />
+    </mat-form-field>
+
+    <!-- Opis projektu -->
+    <mat-form-field appearance="fill">
+      <mat-label>Opis projektu</mat-label>
+      <textarea matInput formControlName="opis"></textarea>
+    </mat-form-field>
+
+    <!-- Termin oddania -->
+    <mat-form-field appearance="fill">
+      <mat-label>Termin oddania</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="dataOddania"
+        placeholder="Wybierz datę"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Anuluj</button>
+  <button mat-raised-button color="primary" [disabled]="!projectForm.valid" (click)="onSave()">Zapisz</button>
+</mat-dialog-actions>

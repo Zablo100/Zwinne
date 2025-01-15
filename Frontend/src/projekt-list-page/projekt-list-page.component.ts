@@ -18,12 +18,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { AddProjectDialogComponent } from './add-project-dialog.component';
 
 
 import { StorageService } from "../app/Services/storage.service";
 
 import { ProjektModalAdminComponent } from '../projekt-modal-admin/projekt-modal-admin.component';
 import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user-modal';
+import {MatIcon} from "@angular/material/icon";
 
 
 
@@ -46,6 +48,7 @@ import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
+    MatIcon,
 
   ],
   templateUrl: './projekt-list-page.component.html',
@@ -187,6 +190,25 @@ export class ProjektListPageComponent {
       if (result?.deleted) {
 
         this.loadProjects(this.pageIndex, this.pageSize);
+      }
+    });
+  }
+
+  openAddProjectDialog(): void {
+    const dialogRef = this.dialog.open(AddProjectDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.service.addProjekt(result).subscribe({
+          next: () => {
+            this.loadProjects(this.pageIndex, this.pageSize);
+          },
+          error: (err: any) => {
+            console.error('Błąd podczas dodawania projektu:', err);
+          },
+        });
       }
     });
   }
