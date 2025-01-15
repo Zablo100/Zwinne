@@ -65,3 +65,17 @@ mat-form-field {
   margin-top: 8px;  /* Odstęp od góry */
   margin-bottom: 8px; /* Odstęp od dołu */
 }
+.form-actions {
+  display: flex;
+  align-items: center; /* Wyrównanie w pionie */
+  gap: 16px; /* Odstęp między polem a przyciskiem */
+}
+
+.search-field {
+  flex: 1; /* Wypełnia resztę dostępnej przestrzeni */
+}
+
+.customButton {
+  white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}
+

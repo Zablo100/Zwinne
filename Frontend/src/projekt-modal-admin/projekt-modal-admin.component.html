@@ -55,6 +55,11 @@
           </button>
         </div>
         <br>
+        <div class="mb-3">
+          <label  class="form-label">Dołącz plik do projektu</label>
+          <input class="form-control" type="file" id="file" accept="pdf, image/png" (change)="onFileChanged($event)">
+        </div>
+        <br>
         <div class="action-item">
           <strong>   Jako administrator możesz także usuwać projekty.
             Kliknij poniższy przycisk aby usunąć projekt. Uwaga! Operacja jest nieodwracalna!</strong>
@@ -64,6 +69,8 @@
           </button>
         </div>
       </div>
+
+
     </mat-tab>
   </mat-tab-group>
   <mat-spinner *ngIf="!projectDetails" diameter="50"></mat-spinner>

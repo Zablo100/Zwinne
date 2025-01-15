@@ -50,6 +50,8 @@ export class ProjektModalAdminComponent implements OnInit {
   projectDetails: any = {};
   assignedStudents: any[] = [];
   selectedStudentId: number | null = null;
+  selectedFile!: File;
+
 
 
   constructor(
@@ -57,7 +59,9 @@ export class ProjektModalAdminComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { projektId: number },
     private projektModalAdminService: ProjektModalAdminService,
     private snackBar: MatSnackBar,private dialog: MatDialog) {}
-
+  onFileChanged(event:any) {
+    this.selectedFile = event.target.files[0];
+  }
   showNotification(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
     this.snackBar.open(message, 'Zamknij', {
       duration: 3000,

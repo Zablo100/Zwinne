@@ -1,12 +1,18 @@
 
 <form [formGroup]="searchForm" class="search-form">
   <h2>Wyszukaj projekt:</h2>
-  <mat-form-field appearance="fill">
-    <mat-label>Nazwa projektu</mat-label>
-    <input matInput formControlName="name" placeholder="Wpisz nazwę projektu">
-  </mat-form-field>
-
+  <div class="form-actions">
+    <mat-form-field appearance="fill" class="search-field">
+      <mat-label>Nazwa projektu</mat-label>
+      <input matInput formControlName="name" placeholder="Wpisz nazwę projektu">
+    </mat-form-field>
+    <button class="btn btn-md mb-3 customButton shadow">
+      <i class="fa fa-user"></i>Utwórz nowy projekt
+    </button>
+  </div>
 </form>
+
+
 <mat-paginator
   [length]="totalElements"
   [pageSize]="pageSize"
