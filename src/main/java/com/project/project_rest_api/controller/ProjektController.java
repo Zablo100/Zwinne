@@ -1,12 +1,15 @@
 package com.project.project_rest_api.controller;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.project.project_rest_api.model.ProjektWithTasks;
 import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,7 @@ import com.project.project_rest_api.service.ProjektService;
 @RequestMapping("/api")
 @CrossOrigin
 public class ProjektController {
+    private static final Logger logger = LogManager.getLogger(ProjektController.class);
     private final ProjektService projektService;
     private final StudentService studentService;
 
@@ -35,6 +39,12 @@ public class ProjektController {
     @GetMapping("/projekty/{projektId}")
     public ResponseEntity<ProjektWithTasks> getProjekt(@PathVariable Integer projektId) {
         Optional<ProjektWithTasks> projektWithTasks = projektService.getProjektWithTasks(projektId);
+
+        if (projektWithTasks.isPresent())
+            logger.info("Wyświetlono projekt numer {}", projektId);
+        else
+            logger.error("Nie można wyświetlić projektu nr {}", + projektId);
+
         return projektWithTasks
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -43,7 +53,7 @@ public class ProjektController {
     @PostMapping("/projekty")
     public ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
 
-        projekt.setDataczasUtworzenia(LocalDateTime.now());
+        //projekt.setDataczasUtworzenia(LocalDateTime.now());
         Projekt createdProejkt = projektService.setProjekt(projekt);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
