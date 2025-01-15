@@ -28,8 +28,7 @@ registerLocaleData(localePl);
   selector: 'app-add-project-dialog',
   templateUrl: './add-project-dialog.component.html',
   providers: [
-    MatDatepickerModule,
-    MatNativeDateModule,
+
     {provide: LOCALE_ID, useValue: 'pl-PL'},
     {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}
   ],

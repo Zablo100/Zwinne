@@ -18,14 +18,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { AddProjectDialogComponent } from './add-project-dialog.component';
 
 
 import { StorageService } from "../app/Services/storage.service";
 
 import { ProjektModalAdminComponent } from '../projekt-modal-admin/projekt-modal-admin.component';
 import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user-modal';
-import {MatIcon} from "@angular/material/icon";
+import {AddProjectDialogComponent} from "./add-project-dialog.component";
 
 
 
@@ -48,7 +47,6 @@ import {MatIcon} from "@angular/material/icon";
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
-    MatIcon,
 
   ],
   templateUrl: './projekt-list-page.component.html',
@@ -97,10 +95,8 @@ export class ProjektListPageComponent {
       switchMap(name => this.service.getFilteredProjects(name, this.pageIndex, this.pageSize))
     ).subscribe({
       next: response => {
-        if (response && response.content) {
-          this.Projekty = response.content;
-          this.totalElements = response.totalElements;
-        }
+        this.Projekty = response.content;
+        this.totalElements = response.totalElements;
       },
       error: error => {
         console.error('Błąd podczas wyszukiwania projektów:', error);
@@ -111,51 +107,26 @@ export class ProjektListPageComponent {
     this.loadProjects(this.pageIndex, this.pageSize);
   }
 
-
   isAdmin(): boolean {
     return this.role === 'admin';
   }
 
   loadFilteredProjects(values: any) {
     const { name, startDate, endDate } = values;
-    return this.service.getFilteredProjects(name, this.pageIndex, this.pageSize).subscribe({
-      next: response => {
-        if (response && response.content) {
-          this.Projekty = response.content;
-          this.totalElements = response.totalElements;
-        } else {
-          console.error('Odpowiedź nie zawiera projektów.');
-        }
-      },
-      error: error => {
-        console.error('Błąd przy ładowaniu projektów:', error);
-      }
-    });
+    return this.service.getFilteredProjects(name, this.pageIndex, this.pageSize);
   }
-
 
   loadProjects(page: number, size: number) {
     this.service.getFilteredProjects('', page, size).subscribe({
       next: response => {
-        if (response && response.content) {
-          // Sprawdź, czy każdy projekt zawiera pole `studenci`
-          this.Projekty = response.content.map(project => {
-            if (!project.studenci) {
-              console.warn(`Brak studentów w projekcie ${project.projektId}`);
-            }
-            return project;
-          });
-          this.totalElements = response.totalElements;
-        } else {
-          console.error('Brak danych w odpowiedzi');
-        }
+        this.Projekty = response.content;
+        this.totalElements = response.totalElements;
       },
       error: error => {
-        console.error('Błąd przy ładowaniu projektów:', error);
+        console.error('Błąd przy ładowaniu projektówww:', error);
       }
     });
   }
-
 
   onPageChange(event: any) {
     this.pageIndex = event.pageIndex;
@@ -175,9 +146,8 @@ export class ProjektListPageComponent {
     this.totalElements = response.totalElements;
     this.pageIndex = response.pageable.pageNumber;
   }
-  getNumberOfStudents(studenci: StudentModel[]): number {
-    console.log('Dane studentów:', studenci);  // Dodaj logowanie
-    return studenci && studenci.length ? studenci.length : 0;
+  getNumberOfStudents(studenci: StudentModel[]){
+    return studenci.length
   }
 
   showId(id: any){
@@ -221,7 +191,6 @@ export class ProjektListPageComponent {
       }
     });
   }
-
   openAddProjectDialog(): void {
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '400px',
@@ -240,6 +209,7 @@ export class ProjektListPageComponent {
       }
     });
   }
+
 
 
 }

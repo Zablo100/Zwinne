@@ -45,7 +45,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatNativeDateModule,
     MatIconModule,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
