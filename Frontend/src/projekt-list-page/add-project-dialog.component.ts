@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangePicker
+} from '@angular/material/datepicker';
+
+
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LOCALE_ID } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -19,11 +27,13 @@ registerLocaleData(localePl);
 @Component({
   selector: 'app-add-project-dialog',
   templateUrl: './add-project-dialog.component.html',
-  standalone: true,
   providers: [
-    { provide: LOCALE_ID, useValue: 'pl-PL' },
-    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+    MatDatepickerModule,
+    MatNativeDateModule,
+    {provide: LOCALE_ID, useValue: 'pl-PL'},
+    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}
   ],
+  standalone: true,
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -31,14 +41,19 @@ registerLocaleData(localePl);
     MatButtonModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
+    MatDatepicker,
     MatNativeDateModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    MatDatepickerModule
+  ]
 })
-export class AddProjectDialogComponent {
+export class AddProjectDialogComponent implements AfterViewInit {
   projectForm: FormGroup;
+  @ViewChild('picker', { static: true }) picker!: MatDatepicker<Date>;
+
+  tomorrow: Date | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<AddProjectDialogComponent>,
@@ -49,6 +64,12 @@ export class AddProjectDialogComponent {
       opis: [''],
       dataOddania: ['', Validators.required],
     });
+  }
+
+  ngAfterViewInit() {
+    this.tomorrow = new Date();
+    this.tomorrow.setDate(this.tomorrow.getDate() + 1);
+    this.projectForm.get('dataOddania')?.setValue(this.tomorrow);
   }
 
   onSave(): void {

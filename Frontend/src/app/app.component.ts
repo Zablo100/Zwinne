@@ -1,15 +1,25 @@
-import {Component, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from "@angular/material/sidenav";
-import {MatIcon} from "@angular/material/icon";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
 import {MatDivider} from "@angular/material/divider";
 import {Subscription} from "rxjs";
 import {StorageService} from "./Services/storage.service";
 import {AuthService} from "./Services/auth.service";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {CommonModule, NgClass} from "@angular/common";
-import {MatButtonModule} from "@angular/material/button";
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+import { MatButtonModule } from '@angular/material/button';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
+
 
 @Component({
   selector: 'app-root',
@@ -26,8 +36,16 @@ import {MatButtonModule} from "@angular/material/button";
     CommonModule,
     NgClass,
     MatButtonModule,
-    RouterLink
+    RouterLink,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatNativeDateModule,
+    MatIconModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
