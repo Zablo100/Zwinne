@@ -1,79 +1,17 @@
+<mat-dialog-actions align="end">
+  <button mat-icon-button (click)="onClose()" aria-label="Zamknij okno">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-dialog-actions>
 <h2 mat-dialog-title>Edycja projektu</h2>
 <mat-dialog-content>
   <mat-tab-group *ngIf="projectDetails">
     <!-- Zakładka: Dane projektu -->
-    <mat-tab label="Dane projektu">
-      <h3>Dane projektu</h3>
-      <table mat-table [dataSource]="[projectDetails]" class="mat-elevation-z8 project-details-table">
-        <!-- ID Projektu -->
-        <ng-container matColumnDef="projektId">
-          <th mat-header-cell *matHeaderCellDef> ID Projektu </th>
-          <td mat-cell *matCellDef="let project"> {{ project.projektId }} </td>
-        </ng-container>
 
-        <!-- Nazwa Projektu -->
-        <ng-container matColumnDef="nazwa">
-          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
-          <td mat-cell *matCellDef="let project"> {{ project.nazwa }} </td>
-        </ng-container>
-
-        <!-- Opis Projektu -->
-        <ng-container matColumnDef="opis">
-          <th mat-header-cell *matHeaderCellDef> Opis </th>
-          <td mat-cell *matCellDef="let project"> {{ project.opis }} </td>
-        </ng-container>
-
-        <!-- Data Utworzenia -->
-        <ng-container matColumnDef="dataczasUtworzenia">
-          <th mat-header-cell *matHeaderCellDef> Data Utworzenia </th>
-          <td mat-cell *matCellDef="let project"> {{ project.dataczasUtworzenia | date:'short' }} </td>
-        </ng-container>
-
-        <!-- Termin Oddania -->
-        <ng-container matColumnDef="dataOddania">
-          <th mat-header-cell *matHeaderCellDef> Termin Oddania </th>
-          <td mat-cell *matCellDef="let project"> {{ project.dataOddania | date:'short' }} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['projektId', 'nazwa', 'opis', 'dataczasUtworzenia', 'dataOddania']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['projektId', 'nazwa', 'opis', 'dataczasUtworzenia', 'dataOddania']"></tr>
-      </table>
-
-      <!-- Zadania projektu -->
-      <h3>Zadania:</h3>
-      <table mat-table [dataSource]="projectDetails?.zadania" class="mat-elevation-z8 task-details-table">
-        <!-- ID Zadania -->
-        <ng-container matColumnDef="zadanieId">
-          <th mat-header-cell *matHeaderCellDef> ID Zadania </th>
-          <td mat-cell *matCellDef="let task"> {{ task.zadanieId }} </td>
-        </ng-container>
-
-        <!-- Nazwa Zadania -->
-        <ng-container matColumnDef="nazwa">
-          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
-          <td mat-cell *matCellDef="let task"> {{ task.nazwa }} </td>
-        </ng-container>
-
-        <!-- Opis Zadania -->
-        <ng-container matColumnDef="opis">
-          <th mat-header-cell *matHeaderCellDef> Opis </th>
-          <td mat-cell *matCellDef="let task"> {{ task.opis }} </td>
-        </ng-container>
-
-        <!-- Data Oddania -->
-        <ng-container matColumnDef="dataCzasOddania">
-          <th mat-header-cell *matHeaderCellDef> Data Oddania </th>
-          <td mat-cell *matCellDef="let task"> {{ task.dataCzasOddania | date:'short' }} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['zadanieId', 'nazwa', 'opis', 'dataCzasOddania']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['zadanieId', 'nazwa', 'opis', 'dataCzasOddania']"></tr>
-      </table>
-    </mat-tab>
 
     <!-- Zakładka: Studenci -->
-    <mat-tab label="Studenci">
-      <h3>Lista studentów przypisanych do projektu</h3>
+    <mat-tab label="Studenci"><br>
+      <h2>Lista studentów przypisanych do projektu</h2>
       <div *ngIf="assignedStudents.length > 0; else noStudents">
         <table mat-table [dataSource]="assignedStudents" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
@@ -108,13 +46,19 @@
     <mat-tab label="Zaawansowane">
       <div class="actions-container">
         <div class="action-item">
-          <p><strong>Przypisz studenta do projektu:</strong></p>
+          <br>
+          <strong>   Jako administrator możesz dodawać studentów do projektu.
+            Kliknij poniższy przycisk aby dodać studenta do projektu.</strong>
+          <br>
           <button mat-raised-button color="primary" (click)="openAssignUserModal()">
             Przypisz studenta
           </button>
         </div>
+        <br>
         <div class="action-item">
-          <p><strong>Usuń projekt:</strong></p>
+          <strong>   Jako administrator możesz także usuwać projekty.
+            Kliknij poniższy przycisk aby usunąć projekt. Uwaga! Operacja jest nieodwracalna!</strong>
+          <br>
           <button mat-raised-button color="warn" (click)="deleteProject(projectDetails.projektId)">
             Usuń projekt
           </button>
@@ -124,6 +68,5 @@
   </mat-tab-group>
   <mat-spinner *ngIf="!projectDetails" diameter="50"></mat-spinner>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onClose()">Zamknij</button>
-</mat-dialog-actions>
+
+

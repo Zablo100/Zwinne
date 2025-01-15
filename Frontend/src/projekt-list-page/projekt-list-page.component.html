@@ -1,9 +1,11 @@
 
 <form [formGroup]="searchForm" class="search-form">
+  <h2>Wyszukaj projekt:</h2>
   <mat-form-field appearance="fill">
     <mat-label>Nazwa projektu</mat-label>
     <input matInput formControlName="name" placeholder="Wpisz nazwę projektu">
   </mat-form-field>
+
 </form>
 <mat-paginator
   [length]="totalElements"
@@ -53,14 +55,14 @@
     <th mat-header-cell *matHeaderCellDef> Akcja </th>
     <td mat-cell *matCellDef="let element">
       <button mat-raised-button color="primary" [routerLink]="['/projekt/', element.projektId]">
-        Otwórz projekt
+        Otwórz
       </button>
     </td>
   </ng-container>
 
   <!-- Admin Column -->
   <ng-container matColumnDef="admin">
-    <th mat-header-cell *matHeaderCellDef> Admin </th>
+    <th mat-header-cell *matHeaderCellDef> Edycja </th>
     <td mat-cell *matCellDef="let element">
       <button
         mat-raised-button

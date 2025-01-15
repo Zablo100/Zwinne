@@ -57,3 +57,11 @@ table.mat-table {
 .button-rounded.mat-stroked-button {
   border-radius: 25% / 50%; /* Zaokrąglony przycisk */
 }
+.search-form {
+  padding: 16px; /* Odstęp wewnętrzny od krawędzi formularza */
+}
+
+mat-form-field {
+  margin-top: 8px;  /* Odstęp od góry */
+  margin-bottom: 8px; /* Odstęp od dołu */
+}
