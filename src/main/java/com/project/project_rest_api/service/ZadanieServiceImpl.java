@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -49,5 +50,15 @@ public class ZadanieServiceImpl implements ZadanieService {
     public Page<Zadanie> getZadaniaByProjektId(Integer projektId, Pageable pageable) {
         return zadanieRepository.findZadaniaProjektu(projektId, pageable);
     }
+    @Override
+    public Page<Zadanie> getZadaniaByStatus(String statusZadanie, Pageable pageable) {
+        return zadanieRepository.findByStatus(statusZadanie, pageable);
+    }
+
+    @Override
+    public List<Zadanie> getAllZadania() {
+        return zadanieRepository.findAll();
+    }
+
 }
 

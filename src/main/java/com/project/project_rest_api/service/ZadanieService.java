@@ -4,6 +4,7 @@ import com.project.project_rest_api.model.Zadanie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ZadanieService {
@@ -13,5 +14,7 @@ public interface ZadanieService {
     Page<Zadanie> getZadania(Pageable pageable);
     Page<Zadanie> searchByNazwa(String nazwa, Pageable pageable);
     Page<Zadanie> getZadaniaByProjektId(Integer projektId, Pageable pageable);
+    Page<Zadanie> getZadaniaByStatus(String statusZadanie, Pageable pageable);
+    List<Zadanie> getAllZadania();
 
 }

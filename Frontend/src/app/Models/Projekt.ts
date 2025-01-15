@@ -19,4 +19,5 @@ export interface ZadanieModel{
     kolejnosc: number,
     opis: string,
     dataCzasOddania: string;
+    status?: 'backlog' | 'todo' | 'in-progress' | 'done';
 }

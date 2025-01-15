@@ -43,7 +43,7 @@ public class ProjektController {
     @PostMapping("/projekty")
     public ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
 
-        projekt.setDataczasUtworzenia(LocalDateTime.now());
+
         Projekt createdProejkt = projektService.setProjekt(projekt);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
