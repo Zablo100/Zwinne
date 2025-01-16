@@ -5,8 +5,14 @@
       <h1>Projekt: {{ Projekt.nazwa }}</h1>
     </div>
     <div class="days-section">
-      <h3>Pozostało <b>{{ iloscDni }} dni</b> do oddania projektu</h3>
+      <h3 *ngIf="iloscDni <= 0" class="overdue">
+        Przekroczono dzień oddania projektu!
+      </h3>
+      <h3 *ngIf="iloscDni > 0">
+        Pozostało: <b>{{ iloscDni }} dni</b> do oddania projektu
+      </h3>
     </div>
+
   </div>
 
 

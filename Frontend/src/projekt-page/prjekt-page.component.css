@@ -62,6 +62,11 @@ h1 {
   margin: 0; /* Usuwa domyślne marginesy, aby poprawić wyrównanie */
   font-size: 1.5rem; /* Dostosuj rozmiar tekstu, jeśli potrzebne */
 }
+/* Styl dla komunikatu o przekroczeniu dnia oddania */
+.overdue {
+  color: red; /* Czerwony kolor tekstu */
+  font-weight: bold; /* Pogrubienie tekstu */
+}
 
 .days-section h3 {
   margin: 0; /* Usuwa domyślne marginesy */
