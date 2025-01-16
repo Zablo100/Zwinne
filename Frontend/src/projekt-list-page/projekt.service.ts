@@ -53,12 +53,12 @@ export class ProjektService {
   }
 
   addProjekt(projekt: any): Observable<any> {
-    return this.http.post<any>(`${this.BASE_URL}/projekty`, projekt).pipe(
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(`${this.BASE_URL}/projekty`, projekt, { headers })
       catchError((error) => {
         console.error('Błąd podczas dodawania projektu:', error);
         return throwError(error);
-      })
-    );
+      });
   }
 
   // getProjekt(page: number, size: number) {

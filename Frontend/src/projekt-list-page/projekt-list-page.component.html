@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <form [formGroup]="searchForm" class="search-form">
   <h2>Wyszukaj projekt:</h2>
@@ -6,9 +7,10 @@
       <mat-label>Nazwa projektu</mat-label>
       <input matInput formControlName="name" placeholder="Wpisz nazwę projektu">
     </mat-form-field>
-    <button class="btn btn-md mb-3 customButton shadow" (click)="openAddProjectDialog()">
-      <i class="fa fa-user"></i>Utwórz projekt
+    <button class="btn btn-md mb-3 customButton shadow btn-success" (click)="openAddProjectDialog()">
+      <i class="fa fa-plus"></i>  Utwórz projekt
     </button>
+
   </div>
 </form>
 
@@ -42,10 +44,12 @@
   <!-- Termin oddania Column -->
   <ng-container matColumnDef="dataOddania">
     <th mat-header-cell *matHeaderCellDef> Termin oddania </th>
-    <td mat-cell *matCellDef="let element">
-      {{element.dataOddania}}
+    <td mat-cell *matCellDef="let projekt">
+      {{ projekt.dataOddania | date: 'yyyy-MM-dd' }}
     </td>
   </ng-container>
+
+
 
   <!-- Liczba studentów Column -->
   <ng-container matColumnDef="iloscStudentow">

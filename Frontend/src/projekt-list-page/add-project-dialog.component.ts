@@ -73,9 +73,21 @@ export class AddProjectDialogComponent implements AfterViewInit {
 
   onSave(): void {
     if (this.projectForm.valid) {
-      this.dialogRef.close(this.projectForm.value);
+      const formData = this.projectForm.value;
+      const dataOddania = new Date(formData.dataOddania)
+        .toISOString()
+        .replace('T', ' ')
+        .split('.')[0]; // Konwersja do 'yyyy-MM-dd HH:mm:ss'
+
+      const projekt = {
+        ...formData,
+        dataOddania,
+      };
+
+      this.dialogRef.close(projekt);
     }
   }
+
 
   onCancel(): void {
     this.dialogRef.close();

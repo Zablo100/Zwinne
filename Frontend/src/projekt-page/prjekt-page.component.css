@@ -18,6 +18,55 @@ header h1 {
     margin: 0;
     font-size: 2em;
 }
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Ustawia elementy po przeciwnych stronach */
+  align-items: center; /* Wyrównuje elementy w pionie */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Opcjonalne: linia oddzielająca nagłówek */
+}
+
+.title-section {
+  display: flex;
+  align-items: center; /* Wyrównuje ikonę i tekst w pionie */
+  gap: 10px; /* Dodaje odstęp między ikoną a tekstem */
+}
+
+.title-section img {
+  display: block; /* Upewnia się, że obraz zachowuje się jak blok */
+}
+
+.days-section h3 {
+  margin: 0; /* Usuwa domyślne marginesy nagłówka */
+  text-align: right; /* Wyrównuje tekst do prawej strony */
+}
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Ustawia elementy po przeciwnych stronach */
+  align-items: center; /* Wyrównuje elementy w pionie */
+  padding: 10px;
+}
+
+.title-section {
+  display: flex;
+  align-items: center; /* Wyrównuje grafikę i tekst w pionie */
+  gap: 10px; /* Odstęp między grafiką a tekstem */
+}
+
+.title-section img {
+  display: inline-block; /* Upewnia się, że obraz nie zajmuje całego wiersza */
+  vertical-align: middle; /* Opcjonalne: wyrównanie w linii tekstu */
+}
+
+h1 {
+  margin: 0; /* Usuwa domyślne marginesy, aby poprawić wyrównanie */
+  font-size: 1.5rem; /* Dostosuj rozmiar tekstu, jeśli potrzebne */
+}
+
+.days-section h3 {
+  margin: 0; /* Usuwa domyślne marginesy */
+  text-align: right; /* Wyrównuje tekst do prawej strony */
+}
 
 nav a {
     color: white;

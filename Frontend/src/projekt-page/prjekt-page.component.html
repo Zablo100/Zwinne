@@ -1,8 +1,15 @@
 <mat-card style="padding: 20px 20px 20px 20px">
-  <h1>
-    <img src="https://cdn-icons-png.flaticon.com/512/6404/6404259.png" alt="Projekt Ikona" width="40" height="40">
-    | Projekt: {{ this.Projekt.nazwa }}
-  </h1>
+  <div class="header-container">
+    <div class="title-section">
+      <img src="https://cdn-icons-png.flaticon.com/512/6404/6404259.png" alt="Projekt Ikona" width="40" height="40">
+      <h1>Projekt: {{ Projekt.nazwa }}</h1>
+    </div>
+    <div class="days-section">
+      <h3>Pozostało <b>{{ iloscDni }} dni</b> do oddania projektu</h3>
+    </div>
+  </div>
+
+
   <mat-divider></mat-divider>
   <br>
   <section class="project-info">
@@ -11,9 +18,8 @@
   </section>
   <section class="project-dates">
     <p><strong>Data Utworzenia:</strong> {{ this.Projekt.dataczasUtworzenia }}</p>
-    <p><strong>Data Oddania:</strong> {{ this.Projekt.dataOddania }}</p>
+    <p><strong>Data Oddania:</strong> {{ this.Projekt.dataOddania | date: 'yyyy-MM-dd'  }}</p>
   </section>
-
   <!-- Lista Studentów -->
   <br>
   <mat-divider></mat-divider>
@@ -55,7 +61,7 @@
         </button>
       </li>
     </ul>
-    <p *ngIf="Pliki?.length === 0">Brak załączonych plików.</p>
+    <h3 *ngIf="Pliki?.length === 0">Brak załączonych plików.</h3>
     <p *ngIf="Pliki?.length === undefined">Brak danych o plikach.</p> <!-- Dodatkowy warunek na undefined -->
   </section>
 </mat-card>
