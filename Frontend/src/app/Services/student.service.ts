@@ -44,6 +44,18 @@ export class StudentService {
       })
     );
   }
+  changePassword(studentId: number, newPassword: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const payload = { password: newPassword };
+
+    return this.http.put(`${this.BASE_URL}/${studentId}/change-password`, payload, { headers }).pipe(
+      catchError((error) => {
+        console.error(`Błąd podczas zmiany hasła dla studenta o ID ${studentId}:`, error);
+        return throwError(error);
+      })
+    );
+  }
+
 
 
 }

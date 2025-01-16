@@ -54,7 +54,7 @@
   <ng-container matColumnDef="akcja">
     <th mat-header-cell *matHeaderCellDef> Edycja </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="primary" [routerLink]="['/projekt/', element.studentId]">
+      <button mat-raised-button color="primary" (click)="openChangePasswordDialog(element.studentId)">
         Zmień hasło
       </button>
     </td>

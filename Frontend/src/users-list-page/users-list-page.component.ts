@@ -13,6 +13,7 @@ import {MatTable, MatTableModule} from "@angular/material/table";
 import {RouterLink} from "@angular/router";
 import {MatButton} from "@angular/material/button";
 import {MatDivider} from "@angular/material/divider";
+import {ChangePasswordDialogComponent} from "./change-password-dialog.component";
 
 @Component({
   selector: 'app-users-list-page',
@@ -96,7 +97,17 @@ export class UsersListPageComponent implements OnInit {
     });
   }
 
-  // Metoda usuwania studenta
+  openChangePasswordDialog(studentId: number): void {
+    const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      data: { studentId },
+      width: '400px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Możesz dodać kod do wykonania po zamknięciu dialogu (np. załadowanie danych ponownie)
+    });
+  }
   deleteStudent(studentId: number): void {
     if (confirm('Czy na pewno chcesz usunąć tego studenta?')) {
       this.studentService.deleteStudent(studentId).subscribe({

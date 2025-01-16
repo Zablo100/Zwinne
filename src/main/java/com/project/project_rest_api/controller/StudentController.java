@@ -1,5 +1,6 @@
 package com.project.project_rest_api.controller;
 
+import com.project.project_rest_api.datasource.ChangePasswordRequest;
 import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,10 +21,12 @@ import java.net.URI;
 public class StudentController {
 
     private final StudentService studentService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, PasswordEncoder passwordEncoder) {
         this.studentService = studentService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/students/{studentId}")
@@ -40,15 +44,18 @@ public class StudentController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/students/{studentId}")
-    public ResponseEntity<Void> updateStudent(@PathVariable Integer studentId, @Valid @RequestBody Student student) {
+    @PutMapping("/students/{studentId}/change-password")
+    public ResponseEntity<Void> changePassword(@PathVariable Integer studentId, @RequestBody ChangePasswordRequest request) {
         return studentService.getStudent(studentId)
                 .map(existingStudent -> {
-                    student.setStudentId(studentId);
-                    studentService.setStudent(student);
-                    return new ResponseEntity<Void>(HttpStatus.OK); // 200
+                    // Hashowanie hasła przed zapisem
+                    String encodedPassword = passwordEncoder.encode(request.getPassword());
+                    existingStudent.setPassword(encodedPassword);
+                    studentService.setStudent(existingStudent); // Aktualizacja studenta w bazie
+                    return new ResponseEntity<Void>(HttpStatus.OK); // 200 OK
                 }).orElse(ResponseEntity.notFound().build()); // 404
     }
+
 
     @DeleteMapping("/students/{studentId}")
     public ResponseEntity<String> deleteStudent(@PathVariable Integer studentId) {
@@ -66,6 +73,18 @@ public class StudentController {
         }
     }
 
+
+
+    @PutMapping("/students/{studentId}")
+    public ResponseEntity<Void> updateStudent(@PathVariable Integer studentId, @Valid @RequestBody Student student) {
+        return studentService.getStudent(studentId)
+                .map(existingStudent -> {
+                    student.setStudentId(studentId);
+                    studentService.setStudent(student);
+                    return new ResponseEntity<Void>(HttpStatus.OK); // 200
+                })
+                .orElse(ResponseEntity.notFound().build()); // 404
+    }
 
 
     @GetMapping(value = "/students")

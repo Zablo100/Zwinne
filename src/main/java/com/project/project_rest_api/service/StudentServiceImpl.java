@@ -5,6 +5,7 @@ import com.project.project_rest_api.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -42,5 +45,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Page<Student> searchByNazwisko(String nazwisko, Pageable pageable) {
         return studentRepository.findByNazwiskoStartsWithIgnoreCase(nazwisko, pageable);
+    }
+    public boolean changePassword(Integer studentId, String newPassword) {
+        // Znajdź studenta na podstawie ID
+        return studentRepository.findById(studentId)
+                .map(student -> {
+                    // Kodowanie nowego hasła
+                    String encodedPassword = passwordEncoder.encode(newPassword);
+                    student.setPassword(encodedPassword);
+                    // Zapisz zaktualizowanego studenta
+                    studentRepository.save(student);
+                    return true; // Zwróć true, jeśli hasło zostało pomyślnie zmienione
+                }).orElse(false); // Zwróć false, jeśli student o danym ID nie został znaleziony
     }
 }

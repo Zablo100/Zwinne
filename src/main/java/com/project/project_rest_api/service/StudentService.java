@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface StudentService {
     Optional<Student> getStudent(Integer studentId);
+    boolean changePassword(Integer studentId, String newPassword);
     Student setStudent(Student student);
     void deleteStudent(Integer studentId);
     Page<Student> getStudents(Pageable pageable);
