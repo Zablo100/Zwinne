@@ -4,6 +4,7 @@ import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -50,13 +51,22 @@ public class StudentController {
     }
 
     @DeleteMapping("/students/{studentId}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Integer studentId) {
-        return studentService.getStudent(studentId)
-                .map(existingStudent -> {
-                    studentService.deleteStudent(studentId);
-                    return new ResponseEntity<Void>(HttpStatus.OK); // 200
-                }).orElse(ResponseEntity.notFound().build()); // 404
+    public ResponseEntity<String> deleteStudent(@PathVariable Integer studentId) {
+        try {
+            studentService.deleteStudent(studentId);
+            return new ResponseEntity<>(HttpStatus.OK); // 200 OK
+        } catch (DataIntegrityViolationException e) {
+            if (e.getMessage().contains("foreign key constraint fails")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Nie można usunąć studenta, ponieważ jest przypisany do projektów.");
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
+
 
     @GetMapping(value = "/students")
     public Page<Student> getStudents(Pageable pageable) {

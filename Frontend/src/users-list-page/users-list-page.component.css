@@ -1,0 +1,112 @@
+/* Stylizacja samej tabeli */
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse; /* Usunięcie odstępów między komórkami */
+}
+
+/* Nagłówki tabeli */
+th.mat-header-cell {
+  text-align: center;
+  background-color: #3f51b5; /* Kolor tła nagłówka */
+  color: white;
+  padding: 5px 5px;
+  font-weight: bold;
+}
+
+/* Komórki tabeli */
+td.mat-cell {
+  text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+  vertical-align: middle; /* Wyśrodkowanie tekstu w pionie */
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd; /* Delikatne obramowanie dolne */
+}
+
+/* Ulepszenie wyglądu tabeli - obramowanie komórek */
+table.mat-table th, table.mat-table td {
+  border: 1px solid #ddd; /* Obramowanie wokół komórek */
+}
+
+/* Kolor tła co drugi wiersz - dla lepszej czytelności */
+tr.mat-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Zmiana koloru tła na hover */
+tr.mat-row:hover {
+  background-color: #e0e0e0;
+}
+
+/* Szerokość kolumn */
+.mat-column-nazwa,
+.mat-column-opis,
+.mat-column-dataczasUtworzenia,
+.mat-column-dataOddania,
+.mat-column-iloscStudentow {
+  width: 20%; /* Możesz dostosować szerokość kolumny */
+}
+
+/* Ulepszony wygląd tabeli z cieniem */
+table.mat-table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.button-rounded.mat-raised-button,
+.button-rounded.mat-flat-button,
+.button-rounded.mat-stroked-button {
+  border-radius: 25% / 50%;
+}
+
+/* Wyrównanie nagłówka z grafiką */
+.header-actions {
+  display: flex;
+  justify-content: space-between; /* Elementy po przeciwnych stronach */
+  align-items: center;
+  margin-bottom: 10px;
+}
+.header-actions h2 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.student-image {
+  height: 100px; /* Ustawienie wysokości obrazka */
+  margin-left: 20px; /* Odstęp między tekstem a obrazkiem */
+  object-fit: cover; /* Obcięcie obrazka, aby wypełniał całą przestrzeń (nie zachowując proporcji) */
+  display: block; /* Usunięcie odstępów wokół obrazka */
+}
+
+
+/* Formularz wyszukiwania */
+.search-form {
+  padding: 16px; /* Odstęp wewnętrzny od krawędzi formularza */
+}
+
+mat-form-field {
+  margin-top: 8px;  /* Odstęp od góry */
+  margin-bottom: 8px; /* Odstęp od dołu */
+}
+
+/* Akcje formularza z przyciskiem */
+.form-actions {
+  display: flex;
+  align-items: center; /* Wyrównanie w pionie */
+  gap: 16px; /* Odstęp między polem a przyciskiem */
+}
+
+/* Wyszukiwarka */
+.search-field {
+  flex: 1; /* Wypełnia resztę dostępnej przestrzeni */
+}
+
+/* Przycisk niestandardowy */
+.customButton {
+  white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}

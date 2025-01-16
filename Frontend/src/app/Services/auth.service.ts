@@ -34,6 +34,8 @@ export class AuthService {
       Authorization: 'Basic ' + btoa('admin:admin'),
     });
   }
+
+
   addFileToProject(formData: FormData): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:admin')

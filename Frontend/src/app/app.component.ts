@@ -82,7 +82,6 @@ export class AppComponent {
         this.surname = user.surname;
 
         this.showAdminBoard = this.role.includes('admin');
-        this.showModeratorBoard = this.role.includes('ROLE_MODERATOR');
       } else {
         console.error('Nie udało się pobrać danych użytkownika.');
       }

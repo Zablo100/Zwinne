@@ -1,2 +1,76 @@
-Tutaj generalnie będzie tabela z zarejestrowanymi użytkownikami + administratorami - z przypisanymi rolami
-Admin będzie mógł usunąć użytkownika.
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="search-form">
+  <div class="header-actions">
+    <p class="subtitle">
+      Tutaj możesz edytować wszystkich dodanych studentów - usuwaj studentów z bazy i zmieniaj ich hasła! Pamiętaj aby przed usunięciem studenta, usunąć go ze wszystkich projektów</p>
+    <img class="student-image" src="https://www.vanderbilt.edu/thewondry/wp-content/uploads/sites/291/2022/10/Student-Organizations-header-larger.png" alt="Happy students">
+  </div>
+</div>
+
+
+<mat-paginator
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)">
+</mat-paginator>
+
+<table mat-table [dataSource]="students">
+
+  <!-- Imie Column -->
+  <ng-container matColumnDef="imie">
+    <th mat-header-cell *matHeaderCellDef> Imię </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.imie}}
+    </td>
+  </ng-container>
+
+  <!-- Nazwisko Column -->
+  <ng-container matColumnDef="nazwisko">
+    <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.nazwisko}}
+    </td>
+  </ng-container>
+
+  <!-- Nr Indeksu Column -->
+  <ng-container matColumnDef="nrIndeksu">
+    <th mat-header-cell *matHeaderCellDef> Nr Indeksu </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.nrIndeksu}}
+    </td>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.email}}
+    </td>
+  </ng-container>
+
+  <!-- Akcja Column -->
+  <ng-container matColumnDef="akcja">
+    <th mat-header-cell *matHeaderCellDef> Edycja </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" [routerLink]="['/projekt/', element.studentId]">
+        Zmień hasło
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Admin Column -->
+  <ng-container matColumnDef="admin">
+    <th mat-header-cell *matHeaderCellDef> Usuń  </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="warn" (click)="deleteStudent(element.studentId)">
+        Usuń studenta
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Header and Row Definitions -->
+  <tr mat-header-row *matHeaderRowDef="colNames"></tr>
+  <tr mat-row *matRowDef="let row; columns: colNames;"></tr>
+</table>
