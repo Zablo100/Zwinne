@@ -11,9 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ZadanieController {
 
     private final ZadanieService zadanieService;
@@ -23,15 +26,17 @@ public class ZadanieController {
         this.zadanieService = zadanieService;
     }
 
-    @GetMapping("/zadania/{zadanieId}")
-    public ResponseEntity<Zadanie> getZadanie(@PathVariable Integer zadanieId) {
-        return ResponseEntity.of(zadanieService.getZadanie(zadanieId));
+    @GetMapping(value = "/zadania", params = "status")
+    public Page<Zadanie> getZadaniaByStatus(@RequestParam(name = "status") String status, Pageable pageable) {
+        return zadanieService.getZadaniaByStatus(status, pageable);
     }
+
+
 
     @PostMapping("/zadania")
     public ResponseEntity<Void> createZadanie(@Valid @RequestBody Zadanie zadanie) {
         Zadanie createdZadanie = zadanieService.setZadanie(zadanie);
-
+        zadanie.setStatus("backlog");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{zadanieId}").buildAndExpand(createdZadanie.getZadanieId()).toUri();
 
@@ -43,10 +48,14 @@ public class ZadanieController {
         return zadanieService.getZadanie(zadanieId)
                 .map(existingZadanie -> {
                     zadanie.setZadanieId(zadanieId); // Ustawienie ID zadania przed zapisem
+                    if (zadanie.getStatus() == null) {
+                        zadanie.setStatus(existingZadanie.getStatus());
+                    }
                     zadanieService.setZadanie(zadanie);
                     return new ResponseEntity<Void>(HttpStatus.OK); // 200
                 }).orElse(ResponseEntity.notFound().build()); // 404
     }
+
 
     @DeleteMapping("/zadania/{zadanieId}")
     public ResponseEntity<Void> deleteZadanie(@PathVariable Integer zadanieId) {
@@ -57,11 +66,21 @@ public class ZadanieController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = "/zadania")
-    public Page<Zadanie> getZadania(Pageable pageable) {
-        return zadanieService.getZadania(pageable);
+    @PatchMapping("/zadania/{zadanieId}/status")
+    public ResponseEntity<Void> updateStatus(@PathVariable Integer zadanieId, @RequestBody String newStatus) {
+        return zadanieService.getZadanie(zadanieId)
+                .map(existingZadanie -> {
+                    existingZadanie.setStatus(newStatus);
+                    zadanieService.setZadanie(existingZadanie);
+                    return new ResponseEntity<Void>(HttpStatus.OK);
+                }).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/zadania")
+    public ResponseEntity<List<Zadanie>> getAllZadania() {
+        List<Zadanie> zadania = zadanieService.getAllZadania();
+        return ResponseEntity.ok(zadania);
+    }
 //    @GetMapping(value = "/zadania", params = "nazwa")
 //    public Page<Zadanie> getZadaniaByNazwa(@RequestParam(name = "nazwa") String nazwa, Pageable pageable) {
 //        return zadanieService.searchByNazwa(nazwa, pageable);

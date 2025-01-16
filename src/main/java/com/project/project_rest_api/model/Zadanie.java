@@ -22,6 +22,8 @@ public class Zadanie {
     private int kolejnosc;
     @Column(length=100)
     private String opis;
+    @Column(name = "status", nullable = false)
+    private String status = "backlog";
 
 
     @Column(nullable=false, name = "dataczas_oddania")
@@ -88,4 +90,12 @@ public class Zadanie {
     public void setProjekt(Projekt projekt) {
         this.projekt = projekt;
     }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String Zadanie) {
+        this.status = status;
+    }
+
 }

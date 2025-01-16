@@ -1,0 +1,30 @@
+<div class="kanban-board">
+  <div
+    *ngFor="let column of columns"
+    class="kanban-column"
+    [ngStyle]="{ 'background-color': column.color }"
+  >
+    <h3>{{ column.name }}</h3>
+    <div
+      cdkDropList
+      [id]="column.key"
+      [cdkDropListData]="getTasksForColumn(column.key)"
+      [cdkDropListConnectedTo]="connectedLists"
+      class="task-list"
+      (cdkDropListDropped)="onDrop($event, column.key)"
+    >
+      <div
+        *ngFor="let task of getTasksForColumn(column.key)"
+        cdkDrag
+        [cdkDragData]="task"
+        class="task-item"
+      >
+        {{ task.nazwa }}
+      </div>
+    </div>
+    <!-- Sekcja z maksymalną liczbą zadań -->
+    <div class="column-footer">
+      Maksymalnie: {{ column.limit === Infinity ? '∞' : column.limit }}
+    </div>
+  </div>
+</div>
