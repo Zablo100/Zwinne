@@ -9,7 +9,7 @@
         Przekroczono dzień oddania projektu!
       </h3>
       <h3 *ngIf="iloscDni > 0">
-        Pozostało: <b>{{ iloscDni }} dni</b> do oddania projektu
+        Do oddania projektu pozostało: <b>{{ iloscDni }} dni</b>
       </h3>
     </div>
 
@@ -36,6 +36,8 @@
       <li *ngFor="let student of Projekt.studenci">
         {{ student.imie }} {{ student.nazwisko }} <a href="mailto:{{ student.email }}">{{ student.email }}</a>
       </li>
+      <h3 *ngIf="Projekt.studenci?.length === 0">Brak dodanych studentów.</h3>
+
     </ul>
   </section>
 
@@ -50,6 +52,7 @@
         <strong style="color:#3a506b">[{{ zadanie.dataCzasOddania }}]</strong> &nbsp;
         <b>{{ zadanie.nazwa }}</b> - {{ zadanie.opis }}
       </li>
+      <h3 *ngIf="Projekt.zadania?.length === 0">Brak dodanych zadań.</h3>
     </ul>
   </section>
 
@@ -62,9 +65,11 @@
     <ul>
       <li *ngFor="let plik of Pliki">
         <button mat-button color="primary" class="pdf-button" (click)="downloadFile(plik.sciezka)">
-          <mat-icon aria-hidden="true" svgIcon="pdf_icon"></mat-icon>
+          <img *ngIf="isPdfFile(plik.sciezka)" src="/pdf_icon.svg" alt="PDF Icon" style="width: 24px; height: 24px; margin-right: 8px;">
+          <img *ngIf="isImageFile(plik.sciezka)" src="/jpg.png" alt="Image Icon" style="width: 24px; height: 24px; margin-right: 8px;">
           {{ plik.sciezka }}
         </button>
+
       </li>
     </ul>
     <h3 *ngIf="Pliki?.length === 0">Brak załączonych plików.</h3>

@@ -6,8 +6,9 @@ import { CommonModule } from '@angular/common';
 import { MatCard } from "@angular/material/card";
 import { MatDivider } from "@angular/material/divider";
 import {MatButton} from "@angular/material/button";
-import {MatIconModule} from "@angular/material/icon";
+import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatCell, MatCellDef} from "@angular/material/table";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-prjekt-page',
@@ -30,7 +31,14 @@ export class PrjektPageComponent {
   Pliki: FileProjectModel[] = [];
   iloscDni: number;
 
-  constructor(private service: ProjektService, private route: ActivatedRoute) {}
+  constructor(private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private service: ProjektService, private route: ActivatedRoute) {
+    console.log('Rejestruję ikonę');
+    this.matIconRegistry.addSvgIcon(
+      'pdf_icon',
+      '/pdf_icon',
+      this.sanitizer.bypassSecurityTrustResourceUrl('/pdf_icon.svg')
+    );
+  }
 
   ngOnInit() {
     const projektId = this.route.snapshot.paramMap.get('id');
@@ -49,7 +57,15 @@ export class PrjektPageComponent {
       }
     );
   }
+  isPdfFile(filePath: string): boolean {
+    return filePath.toLowerCase().endsWith('.pdf');
+  }
 
+  // Sprawdza, czy plik ma rozszerzenie obrazu (np. .jpg, .png)
+  isImageFile(filePath: string): boolean {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
+    return imageExtensions.some(ext => filePath.toLowerCase().endsWith(ext));
+  }
   dniDoOddania(deadline: string | Date): number {
     const today = new Date();
     const dueDate = new Date(deadline);
