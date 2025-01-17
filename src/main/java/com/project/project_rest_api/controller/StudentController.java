@@ -4,6 +4,7 @@ import com.project.project_rest_api.datasource.ChangePasswordRequest;
 import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -91,6 +93,27 @@ public class StudentController {
     public Page<Student> getStudents(Pageable pageable) {
         return studentService.getStudents(pageable);
     }
+
+    @GetMapping("/students/me")
+    public ResponseEntity<Student> getCurrentStudent(@RequestHeader(value = "X-User-Email", required = true) String email) {
+        if (email == null || email.isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Zwraca 400, jeśli brak emaila
+        }
+
+        Student student = studentService.findByEmail(email);
+
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Zwraca 401, jeśli student nie istnieje
+        }
+
+        return ResponseEntity.ok(student); // Zwraca dane studenta
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleExceptions(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Wystąpił błąd: " + e.getMessage());
+    }
+
+
 
 //    @GetMapping(value = "/students", params = "imie")
 //    public Page<Student> getStudentsByImie(@RequestParam(name = "nazwisko") String nazwisko, Pageable pageable) {

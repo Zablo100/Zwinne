@@ -172,6 +172,10 @@
 
 
       </div>
+      <div class="invalid-feedback" *ngIf="password !== form.confirmPassword && f.submitted">
+        Hasła muszą być identyczne!
+      </div>
+
     </form>
   </div>
 

@@ -96,18 +96,3 @@ mat-form-field {
   text-decoration: underline; /* Dodaje podkreślenie po najechaniu */
   color: #555; /* Przyciemnia kolor po najechaniu */
 }
-
-.snackbar-success {
-  background-color: #4caf50; /* Zielony */
-  color: white;
-}
-
-.snackbar-error {
-  background-color: #f44336; /* Czerwony */
-  color: white;
-}
-
-.snackbar-info {
-  background-color: #2196f3; /* Niebieski */
-  color: white;
-}

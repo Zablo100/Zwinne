@@ -108,4 +108,10 @@ public class ProjektServiceImpl implements ProjektService {
 
         projektRepository.save(projekt);
     }
+
+    @Override
+    public boolean isStudentAssignedToProject(Integer projektId, Integer studentId) {
+        return projektRepository.isStudentAssignedToProject(projektId, studentId);
+    }
+
 }

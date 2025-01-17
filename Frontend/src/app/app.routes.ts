@@ -6,10 +6,14 @@ import {LoginPageComponent} from "../login-page/login-page.component";
 import {RegisterComponent} from "../register-page/register.component";
 import { AuthGuard } from './guard';
 import {UsersListPageComponent} from "../users-list-page/users-list-page.component";
+import {ProjektListYourComponent} from "../projekt-list-your/projekt-list-your.component";
+import {ContactComponent} from "../contact/contact.component";
 export const routes: Routes = [
   {path: "projekty", component: ProjektListPageComponent, canActivate: [AuthGuard] },
   {path: "projekt/:id", component: PrjektPageComponent, canActivate: [AuthGuard]},
+  { path: 'twojeProjekty', component: ProjektListYourComponent, canActivate: [AuthGuard] },
   {path: "login", component: LoginPageComponent},
+  {path: "kontakt", component: ContactComponent},
   {path: "register", component: RegisterComponent},
   {path: "users", component: UsersListPageComponent, canActivate: [AuthGuard]}
 ];

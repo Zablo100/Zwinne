@@ -21,4 +21,7 @@ public interface ProjektService {
     Projekt addStudentToProjekt(Integer projektId, Integer studentId);
     Optional<ProjektWithTasks> getProjektWithTasks(Integer projektId);
     void removeStudentFromProjekt(Integer projektId, Integer studentId);
+    boolean isStudentAssignedToProject(Integer projektId, Integer studentId);
+    Page<Projekt> getProjektyForStudent(Integer studentId, Pageable pageable);
+
 }

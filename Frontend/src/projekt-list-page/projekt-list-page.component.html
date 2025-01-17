@@ -25,11 +25,20 @@
 <table mat-table [dataSource]="Projekty">
 
 
+
+
   <!-- Nazwa projektu Column -->
   <ng-container matColumnDef="nazwa">
     <th mat-header-cell *matHeaderCellDef> Nazwa projektu </th>
     <td mat-cell *matCellDef="let element">
-      <b>{{element.nazwa}} </b>
+      <a
+        [href]="'/projekt/' + element.projektId"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="project-link"
+      >
+        <b>{{ element.nazwa }}</b>
+      </a>
     </td>
   </ng-container>
 

@@ -56,20 +56,29 @@ export class LoginPageComponent implements OnInit{
 
         this.storageService.saveUser(data);
 
+        // Zapis studentId
+        if (data.studentId) {
+          this.storageService.saveStudentId(data.studentId);
+          console.log('Zapisano studentId:', data.studentId);
+        } else {
+          console.warn('Brak studentId w odpowiedzi z serwera.');
+        }
+
         this.isLoginFailed = false;
         this.isLoggedIn = true;
 
         this.router.navigate(['/projekty']).then(() => {
-          window.location.reload()
+          window.location.reload();
         });
       },
       error: err => {
-        console.log('Error from server:', err);
+        console.error('Error from server:', err);
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }
     });
   }
+
 
   reloadPage(): void {
     window.location.reload();

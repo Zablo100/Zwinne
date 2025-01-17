@@ -54,12 +54,14 @@ public class Student {
         this.nazwisko = nazwisko;
         this.nrIndeksu = nrIndeksu;
     }
-    public Student(String imie, String nazwisko, String nrIndeksu, String email, Boolean stacjonarny) {
+    public Student (String imie, String nazwisko, String nrIndeksu, String email, Boolean stacjonarny, String password, String role) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.nrIndeksu = nrIndeksu;
         this.email = email;
         this.stacjonarny = stacjonarny;
+        this.password = password;
+        this.role = role;
     }
 
     public Integer getStudentId() {

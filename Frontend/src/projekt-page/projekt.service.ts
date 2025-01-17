@@ -26,6 +26,22 @@ export class ProjektService {
       })
     );
   }
+
+  isStudentAssignedToProject(projektId: number, studentId: number): Observable<boolean> {
+    const headers = this.getAuthHeaders(); // Użycie nagłówków uwierzytelniających
+    return this.http.get<boolean>(
+      `http://localhost:8080/api/projekty/${projektId}/isAssigned?studentId=${studentId}`,
+      { headers }
+    );
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      Authorization: 'Basic ' + btoa('admin:admin'), // Zamień dane logowania na dynamiczne, jeśli potrzebne
+    });
+  }
+
+
   downloadFile(fileName: string): Observable<Blob> {
     const headers = new HttpHeaders({
       'Authorization': 'Basic ' + btoa('admin:admin') // Dodaj nagłówki uwierzytelniania

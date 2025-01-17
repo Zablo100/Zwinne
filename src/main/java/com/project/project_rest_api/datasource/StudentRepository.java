@@ -15,12 +15,4 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findByEmail(String email);
 
 
-
-    @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END " +
-            "FROM projekt_student ps " +
-            "WHERE ps.projekt_id = :projektId AND ps.student_id = :studentId",
-            nativeQuery = true)
-    boolean existsByProjektIdAndStudentId(@Param("projektId") Integer projektId, @Param("studentId") Integer studentId);
-
-
 }

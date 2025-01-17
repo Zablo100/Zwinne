@@ -61,31 +61,57 @@ public class AuthController { private final JwtUtil jwtUtil;
                 "name", student.getImie(),
                 "surname", student.getNazwisko(),
                 "role", student.getRole(),
+                "studentId", student.getStudentId(),
                 "message", "Zalogowano pomyślnie!"
         ));
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> addStudent(@RequestBody Map<String, String> studentData) {
+    public ResponseEntity<?> addStudent(@RequestBody Map<String, String> studentData) {
+        String email = studentData.get("email");
+        String indeks = studentData.get("indeks");
+
+        // Sprawdź, czy email istnieje
+        if (studentRepository.findByEmail(email) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Email jest już zajęty"));
+        }
+
+        // Sprawdź, czy numer indeksu istnieje
+        if (studentRepository.findByNrIndeksu(indeks).isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Numer indeksu jest już zajęty"));
+        }
+
+        // Walidacja hasła
+        String password = studentData.get("password");
+        if (!isValidPassword(password)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Hasło musi zawierać co najmniej 8 znaków, jedną dużą literę, jedną małą literę i cyfrę"));
+        }
 
         try {
             Student student = new Student();
             student.setImie(studentData.get("name"));
             student.setNazwisko(studentData.get("lastName"));
-            student.setPassword(passwordEncoder.encode(studentData.get("password")));
-            student.setEmail(studentData.get("email"));
-            student.setNrIndeksu(studentData.get("indeks"));
+            student.setPassword(passwordEncoder.encode(password));
+            student.setEmail(email);
+            student.setNrIndeksu(indeks);
             student.setRole("user");
-            System.out.println("Received data: " + student.getEmail());
             studentRepository.save(student);
-            logger.info(String.format("Utworzono konto %s pomyślnie", student.getEmail()));
-            return ResponseEntity.ok("Student uploaded successfully!");
 
+            logger.info(String.format("Utworzono konto %s pomyślnie", email));
+            return ResponseEntity.ok(Map.of("message", "Rejestracja zakończona sukcesem"));
         } catch (Exception e) {
-            logger.error(String.format("Przy rejestracji konta wystąpił problem: %s",e.getMessage()));
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to upload  student!");
+            logger.error(String.format("Błąd podczas rejestracji: %s", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Błąd podczas rejestracji"));
         }
     }
 
+    private boolean isValidPassword(String password) {
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+        return password.matches(passwordPattern);
+    }
     @PostMapping("/signout")
     public ResponseEntity<Map<String, String>> signout() {
         return ResponseEntity.ok(Map.of(

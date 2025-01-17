@@ -5,7 +5,7 @@ import {StorageService} from "../app/Services/storage.service";
 import {FormsModule} from "@angular/forms";
 import {CommonModule, NgClass} from "@angular/common";
 import {MatDivider} from "@angular/material/divider";
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit{
   isLoginFailed = false;
   role: string = '';
 
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService) { }
+  constructor(private snackBar: MatSnackBar, private router: Router, private authService: AuthService, private storageService: StorageService) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
@@ -50,23 +50,33 @@ export class RegisterComponent implements OnInit{
 
   onSubmit(): void {
     const { email, password, confirmPassword, name, lastName, indeks } = this.form;
+
+    // Sprawdź, czy hasła są takie same
+    if (password !== confirmPassword) {
+      this.showNotification("Hasła nie są takie same!", "error");
+      return;
+    }
+
     this.authService.register(name, lastName, email, password, indeks).subscribe({
-      next: data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
+      next: (data) => {
+        this.showNotification("Rejestracja zakończona sukcesem!", "success");
         this.navigateToLoginPage();
-
       },
-      error: err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-        alert(this.isSignUpFailed);
-
-      }
+      error: (err) => {
+        const errorMessage = err.error.message || "Wystąpił błąd podczas rejestracji";
+        this.showNotification(errorMessage, "error");
+        console.error("Błąd podczas rejestracji:", err);
+      },
     });
+  }
 
-
+  showNotification(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
+    this.snackBar.open(message, 'Zamknij', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: [`snackbar-${type}`],
+    });
   }
   navigateToLoginPage(){
     setTimeout(() => {

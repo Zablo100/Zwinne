@@ -8,6 +8,7 @@ import com.project.project_rest_api.model.Student;
 import com.project.project_rest_api.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -41,14 +42,23 @@ public class ProjektController {
     }
 
     @PostMapping("/projekty")
-    public ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
-        Projekt newProject = projektService.setProjekt(projekt);
+    public ResponseEntity<?> createProjekt(@Valid @RequestBody Projekt projekt) {
+        try {
+            Projekt newProject = projektService.setProjekt(projekt);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{projektId}").buildAndExpand(newProject.getProjektId()).toUri();
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{projektId}").buildAndExpand(newProject.getProjektId()).toUri();
 
-        return ResponseEntity.created(location).build();
+            return ResponseEntity.created(location).build();
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Projekt o podanej nazwie już istnieje.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Wystąpił błąd podczas dodawania projektu.");
+        }
     }
+
 
     @PutMapping("/projekty/{projektId}")
     public ResponseEntity<Void> updateProjekt(@PathVariable Integer projektId, @Valid @RequestBody Projekt projekt) {
@@ -94,6 +104,30 @@ public class ProjektController {
         }
         return ResponseEntity.notFound().build(); // 404 Not Found
     }
+
+    @GetMapping("/projekty/{projektId}/isAssigned")
+    public ResponseEntity<Boolean> isStudentAssignedToProject(
+            @PathVariable Integer projektId,
+            @RequestParam(value = "studentId", required = true) Integer studentId) {
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false); // Zwraca 400, jeśli brak studentId
+        }
+
+        boolean isAssigned = projektService.isStudentAssignedToProject(projektId, studentId);
+        return ResponseEntity.ok(isAssigned);
+    }
+
+    @GetMapping("/projekty/student/{studentId}")
+    public ResponseEntity<Page<Projekt>> getProjektyForStudent(
+            @PathVariable Integer studentId,
+            Pageable pageable) {
+        Page<Projekt> projekty = projektService.getProjektyForStudent(studentId, pageable);
+        if (projekty.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(projekty); // 200 OK z listą projektów
+    }
+
 
 
 }

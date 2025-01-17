@@ -81,6 +81,9 @@ public class ZadanieController {
         List<Zadanie> zadania = zadanieService.getAllZadania();
         return ResponseEntity.ok(zadania);
     }
+
+
+
 //    @GetMapping(value = "/zadania", params = "nazwa")
 //    public Page<Zadanie> getZadaniaByNazwa(@RequestParam(name = "nazwa") String nazwa, Pageable pageable) {
 //        return zadanieService.searchByNazwa(nazwa, pageable);

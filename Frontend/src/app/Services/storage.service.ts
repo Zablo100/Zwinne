@@ -10,7 +10,7 @@ export interface user {
 
 }
 
-
+const STUDENT_ID_KEY = 'student-id';
 @Injectable({
   providedIn: 'root'
 })
@@ -46,6 +46,19 @@ export class StorageService {
 
   public logout(): void {
     window.sessionStorage.removeItem(USER_KEY);
+  }
+
+  public saveStudentId(studentId: number): void {
+    window.sessionStorage.setItem(STUDENT_ID_KEY, studentId.toString());
+  }
+
+  public getStudentId(): number | null {
+    const studentId = window.sessionStorage.getItem(STUDENT_ID_KEY);
+    return studentId ? Number(studentId) : null;
+  }
+
+  public clearStorage(): void {
+    window.sessionStorage.clear();
   }
 
 }

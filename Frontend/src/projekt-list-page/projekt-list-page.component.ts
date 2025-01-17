@@ -25,6 +25,7 @@ import { StorageService } from "../app/Services/storage.service";
 import { ProjektModalAdminComponent } from '../projekt-modal-admin/projekt-modal-admin.component';
 import { AssignUserModalComponent } from '../projekt-modal-admin/app-assign-user-modal';
 import {AddProjectDialogComponent} from "./add-project-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -65,7 +66,7 @@ export class ProjektListPageComponent {
 
   searchForm: FormGroup;
 
-  constructor(private service: ProjektService, private fb: FormBuilder, private storageService: StorageService,private dialog: MatDialog ){
+  constructor(private snackBar: MatSnackBar,private service: ProjektService, private fb: FormBuilder, private storageService: StorageService,private dialog: MatDialog ){
     this.searchForm = this.fb.group({
       name: [''],
       startDate: [''],
@@ -190,7 +191,20 @@ export class ProjektListPageComponent {
         this.loadProjects(this.pageIndex, this.pageSize);
       }
     });
+
+
   }
+
+  // Funkcja powiadomień SnackBar
+  showNotification(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
+    this.snackBar.open(message, 'Zamknij', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: [`snackbar-${type}`],
+    });
+  }
+
   openAddProjectDialog(): void {
     const dialogRef = this.dialog.open(AddProjectDialogComponent, {
       width: '400px',
@@ -200,10 +214,12 @@ export class ProjektListPageComponent {
       if (result) {
         this.service.addProjekt(result).subscribe({
           next: () => {
+            this.showNotification('Projekt został pomyślnie dodany!', 'success');
             this.loadProjects(this.pageIndex, this.pageSize);
           },
           error: (err: any) => {
             console.error('Błąd podczas dodawania projektu:', err);
+            this.showNotification('Nie udało się dodać projektu. Spróbuj ponownie.', 'error');
           },
         });
       }

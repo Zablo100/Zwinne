@@ -20,13 +20,13 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(
       AUTH_API + 'signin',
-      {
-        email,
-        password,
-
-      },
-
+      { email, password },
       httpOptions
+    ).pipe(
+      catchError((error) => {
+        console.error('Błąd podczas logowania:', error);
+        return throwError(error);
+      })
     );
   }
   private getAuthHeaders(): HttpHeaders {

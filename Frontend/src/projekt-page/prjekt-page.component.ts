@@ -9,19 +9,20 @@ import {MatButton} from "@angular/material/button";
 import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatCell, MatCellDef} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
-
+import {KanbanBoardComponent} from "../projekt-kanban/kanban-board.component";
+import {StorageService} from "../app/Services/storage.service";
 @Component({
   selector: 'app-prjekt-page',
   standalone: true,
-    imports: [
-        CommonModule,
-        MatCard,
-        MatDivider,
-        MatButton,
-        MatIconModule,
-        MatCell,
-        MatCellDef
-    ],
+  imports: [
+    CommonModule,
+    MatCard,
+    MatDivider,
+    MatButton,
+    MatIconModule,
+
+    KanbanBoardComponent
+  ],
   templateUrl: './prjekt-page.component.html',
   styleUrls: ['./prjekt-page.component.css']
 })
@@ -31,7 +32,9 @@ export class PrjektPageComponent {
   Pliki: FileProjectModel[] = [];
   iloscDni: number;
 
-  constructor(private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private service: ProjektService, private route: ActivatedRoute) {
+  isAssigned: boolean = false;
+
+  constructor( private storageService: StorageService, private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private service: ProjektService, private route: ActivatedRoute) {
     console.log('Rejestruję ikonę');
     this.matIconRegistry.addSvgIcon(
       'pdf_icon',
@@ -42,21 +45,56 @@ export class PrjektPageComponent {
 
   ngOnInit() {
     const projektId = this.route.snapshot.paramMap.get('id');
+    const studentId = this.storageService.getStudentId();
+
+    if (studentId === null) {
+      console.error('Student ID nie został znaleziony w StorageService.');
+      // Opcjonalnie: Przekierowanie na stronę logowania
+
+      return; // Przerwij dalsze wykonywanie
+    }
+
+    console.log('Zalogowany studentId:', studentId);
+
+    // Pobierz dane projektu
     this.service.getProjekt(projektId).subscribe(
-      response => {
+      (response) => {
         this.Projekt = response as ProjektWithTaskModel;
         this.Zadania = this.Projekt.zadania;
         this.Pliki = this.Projekt.files;
         this.iloscDni = this.dniDoOddania(this.Projekt.dataOddania);
+
         console.log('Projekt:', this.Projekt);
         console.log('Pliki:', this.Pliki);
       },
-      error => {
-        console.log(error);
-        console.log(projektId);
+      (error) => {
+        console.error('Błąd podczas pobierania projektu:', error);
+      }
+    );
+
+    this.service.isStudentAssignedToProject(Number(projektId), studentId).subscribe(
+      (response: boolean) => {
+        this.isAssigned = response;
+        console.log('Czy użytkownik przypisany do projektu:', this.isAssigned);
+
+        if (!this.isAssigned) {
+          console.warn('Użytkownik nie ma dostępu do tego projektu.');
+        }
+      },
+      (error) => {
+        console.error('Błąd podczas sprawdzania przypisania:', error);
       }
     );
   }
+
+
+  getStudentId(): number {
+    const studentId = localStorage.getItem('studentId'); // Pobierz studentId z localStorage
+    return studentId ? Number(studentId) : 0; // Zwróć wartość jako liczba lub 0, jeśli brak danych
+  }
+
+
+
   isPdfFile(filePath: string): boolean {
     return filePath.toLowerCase().endsWith('.pdf');
   }

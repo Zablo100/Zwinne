@@ -58,4 +58,9 @@ public class StudentServiceImpl implements StudentService {
                     return true; // Zwróć true, jeśli hasło zostało pomyślnie zmienione
                 }).orElse(false); // Zwróć false, jeśli student o danym ID nie został znaleziony
     }
+
+    @Override
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
 }
