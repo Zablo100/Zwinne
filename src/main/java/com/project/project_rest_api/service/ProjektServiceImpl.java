@@ -114,4 +114,9 @@ public class ProjektServiceImpl implements ProjektService {
         return projektRepository.isStudentAssignedToProject(projektId, studentId);
     }
 
+    @Override
+    public Page<Projekt> getProjektyForStudent(Integer studentId, Pageable pageable) {
+        return projektRepository.findProjektyByStudentId(studentId, pageable);
+    }
+
 }
