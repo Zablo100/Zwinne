@@ -18,6 +18,7 @@ public interface ProjektRepository extends JpaRepository<Projekt, Integer> {
             "WHERE p.projektId = :projektId AND s.studentId = :studentId")
     boolean isStudentAssignedToProject(@Param("projektId") Integer projektId, @Param("studentId") Integer studentId);
 
+    Page<Projekt> findByStudenci_StudentId(Integer studentId, Pageable pageable);
 
     @Query("SELECT p FROM Projekt p JOIN p.studenci s WHERE s.studentId = :studentId")
     Page<Projekt> findProjektyByStudentId(@Param("studentId") Integer studentId, Pageable pageable);

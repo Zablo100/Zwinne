@@ -26,7 +26,8 @@
     <p><strong>Data Utworzenia:</strong> {{ Projekt?.dataczasUtworzenia }}</p>
     <p><strong>Data Oddania:</strong> {{ Projekt?.dataOddania | date: 'yyyy-MM-dd' }}</p>
   </section>
-
+  <mat-divider></mat-divider>
+  <br>
   <!-- Lista Studentów -->
   <section *ngIf="isAssigned" class="project-students">
     <h2>Studenci przypisani do projektu</h2>
@@ -37,7 +38,8 @@
       <h3 *ngIf="Projekt?.studenci?.length === 0">Brak dodanych studentów.</h3>
     </ul>
   </section>
-
+  <mat-divider></mat-divider>
+  <br>
   <!-- Lista Zadań -->
   <section *ngIf="isAssigned" class="project-tasks">
     <h2>Lista Zadań</h2>
@@ -47,13 +49,15 @@
       </li>
     </ul>
   </section>
-
+  <mat-divider></mat-divider>
+  <br>
   <!-- Tablica Kanban -->
   <section *ngIf="isAssigned" class="kanban-board">
     <h2>Tablica Kanban</h2>
     <app-kanban-board [tasks]="Zadania"></app-kanban-board>
   </section>
-
+  <mat-divider></mat-divider>
+  <br>
   <!-- Informacja o dostępie -->
   <div *ngIf="!isAssigned" class="access-info">
     <p style="color: red; font-weight: bold;">Nie masz dostępu do tego projektu.</p>
