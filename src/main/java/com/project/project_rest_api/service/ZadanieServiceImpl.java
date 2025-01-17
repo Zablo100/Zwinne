@@ -1,5 +1,6 @@
 package com.project.project_rest_api.service;
 
+import com.project.project_rest_api.datasource.ProjektRepository;
 import com.project.project_rest_api.datasource.ZadanieRepository;
 import com.project.project_rest_api.model.Zadanie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class ZadanieServiceImpl implements ZadanieService {
 
     private final ZadanieRepository zadanieRepository;
+    private final ProjektRepository projektRepository;
 
     @Autowired
-    public ZadanieServiceImpl(ZadanieRepository zadanieRepository) {
+    public ZadanieServiceImpl(ZadanieRepository zadanieRepository, ProjektRepository projektRepository) {
         this.zadanieRepository = zadanieRepository;
+        this.projektRepository = projektRepository;
     }
 
     @Override
@@ -59,6 +62,12 @@ public class ZadanieServiceImpl implements ZadanieService {
     public List<Zadanie> getAllZadania() {
         return zadanieRepository.findAll();
     }
+
+    @Override
+    public boolean canCreateTask(Integer studentId, Integer projektId) {
+        return projektRepository.isStudentAssignedToProject(studentId, projektId);
+    }
+
 
 }
 

@@ -1,7 +1,12 @@
 package com.project.project_rest_api.controller;
 
+import com.project.project_rest_api.datasource.LogRepository;
+import com.project.project_rest_api.model.CreateTaskRequest;
+import com.project.project_rest_api.model.Projekt;
 import com.project.project_rest_api.model.Zadanie;
+import com.project.project_rest_api.service.ProjektService;
 import com.project.project_rest_api.service.ZadanieService;
+import com.project.project_rest_api.utils.DbLogger;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 @RestController
@@ -20,10 +26,16 @@ import java.util.List;
 public class ZadanieController {
 
     private final ZadanieService zadanieService;
+    private final ProjektService projektService;
+    private final LogRepository logRepository;
+    private final DbLogger dbLogger;
 
     @Autowired
-    public ZadanieController(ZadanieService zadanieService) {
+    public ZadanieController(ZadanieService zadanieService, ProjektService projektService, LogRepository logRepository) {
         this.zadanieService = zadanieService;
+        this.projektService = projektService;
+        this.logRepository = logRepository;
+        dbLogger = new DbLogger(ZadanieController.class, logRepository);
     }
 
     @GetMapping(value = "/zadania", params = "status")
@@ -34,9 +46,25 @@ public class ZadanieController {
 
 
     @PostMapping("/zadania")
-    public ResponseEntity<Void> createZadanie(@Valid @RequestBody Zadanie zadanie) {
-        Zadanie createdZadanie = zadanieService.setZadanie(zadanie);
-        zadanie.setStatus("backlog");
+    public ResponseEntity<Void> createZadanie(@Valid @RequestBody CreateTaskRequest zadanieRequest) {
+
+        if(!zadanieService.canCreateTask(zadanieRequest.getStudentId(), zadanieRequest.getProjektId())){
+            dbLogger.debug(String.format("Student o id: %s nie może tworzyć zadani w projekcie: %s", zadanieRequest.getStudentId(), zadanieRequest.getProjektId()));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        Projekt projekt = projektService.getProjekt(zadanieRequest.getProjektId()).orElse(null);
+
+        if(projekt == null){
+            dbLogger.debug(String.format("Dodawanie nowego zadania nie powiodło się, błędne Id projektu (%s)", zadanieRequest.getProjektId()));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        zadanieRequest.getZadanie().setProjekt(projekt);
+        Zadanie createdZadanie = zadanieService.setZadanie(zadanieRequest.getZadanie());
+
+        zadanieRequest.getZadanie().setStatus("backlog");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{zadanieId}").buildAndExpand(createdZadanie.getZadanieId()).toUri();
 

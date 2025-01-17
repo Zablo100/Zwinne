@@ -16,5 +16,6 @@ public interface ZadanieService {
     Page<Zadanie> getZadaniaByProjektId(Integer projektId, Pageable pageable);
     Page<Zadanie> getZadaniaByStatus(String statusZadanie, Pageable pageable);
     List<Zadanie> getAllZadania();
+    boolean canCreateTask(Integer studentId, Integer projektId);
 
 }

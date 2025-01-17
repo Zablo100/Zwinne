@@ -50,4 +50,16 @@ export class ProjektService {
     return this.http.get(`${this.baseUrl}/files/${fileName}`, { headers, responseType: 'blob' });
   }
 
+  addTaskToProjekt(request: any){
+    console.log("Tak")
+    console.log(request)
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>('http://localhost:8080/api/zadania', request, { headers }).pipe(
+      catchError((error) => {
+        console.error('Błąd podczas dodawania projektu:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }

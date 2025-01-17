@@ -11,6 +11,9 @@ import {MatCell, MatCellDef} from "@angular/material/table";
 import {DomSanitizer} from "@angular/platform-browser";
 import {KanbanBoardComponent} from "../projekt-kanban/kanban-board.component";
 import {StorageService} from "../app/Services/storage.service";
+import { MatDialog } from '@angular/material/dialog';
+import { firstValueFrom, map } from 'rxjs';
+import { AddTaskComponent } from './addTask/addTask.component';
 @Component({
   selector: 'app-prjekt-page',
   standalone: true,
@@ -34,7 +37,13 @@ export class PrjektPageComponent {
 
   isAssigned: boolean = false;
 
-  constructor( private storageService: StorageService, private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private service: ProjektService, private route: ActivatedRoute) {
+  constructor( private storageService: StorageService, 
+    private matIconRegistry: MatIconRegistry, 
+    private sanitizer: DomSanitizer, 
+    private service: ProjektService, 
+    private route: ActivatedRoute,
+    private dialog: MatDialog) 
+    {
     console.log('Rejestruję ikonę');
     this.matIconRegistry.addSvgIcon(
       'pdf_icon',
@@ -129,5 +138,12 @@ export class PrjektPageComponent {
     );
   }
 
+  openAddTaskDialog(){
+    const projektId = Number(this.route.snapshot.paramMap.get('id'));
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      data: {projektId: projektId }
+    });
+
+    }
 
 }
