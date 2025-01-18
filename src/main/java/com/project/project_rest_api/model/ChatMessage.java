@@ -4,7 +4,6 @@ public class ChatMessage {
     private String sender;
     private String content;
 
-    // Gettery i settery
     public String getSender() {
         return sender;
     }
