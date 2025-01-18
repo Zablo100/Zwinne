@@ -1,0 +1,116 @@
+.form-container { display: flex; flex-direction: column; } 
+.mat-form-field { width: 100%; margin-bottom: 16px; /* Odstęp między polami formularza */ }
+
+/* Stylizacja samej tabeli */
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse; /* Usunięcie odstępów między komórkami */
+}
+
+/* Nagłówki tabeli */
+th.mat-header-cell {
+  text-align: center;
+  background-color: #3f51b5; /* Kolor tła nagłówka */
+  color: white;
+  padding: 12px 16px;
+  font-weight: bold;
+}
+
+/* Komórki tabeli */
+td.mat-cell {
+  text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+  vertical-align: middle; /* Wyśrodkowanie tekstu w pionie */
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd; /* Delikatne obramowanie dolne */
+}
+
+/* Ulepszenie wyglądu tabeli - obramowanie komórek */
+table.mat-table th, table.mat-table td {
+  border: 1px solid #ddd; /* Obramowanie wokół komórek */
+}
+
+/* Kolor tła co drugi wiersz - dla lepszej czytelności */
+tr.mat-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Zmiana koloru tła na hover */
+tr.mat-row:hover {
+  background-color: #e0e0e0;
+}
+
+/* Szerokość kolumn */
+.mat-column-nazwa,
+.mat-column-opis,
+.mat-column-dataczasUtworzenia,
+.mat-column-dataOddania,
+.mat-column-iloscStudentow {
+  width: 20%; /* Możesz dostosować szerokość kolumny */
+}
+
+/* Ulepszony wygląd tabeli z cieniem */
+table.mat-table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.button-rounded.mat-raised-button,
+.button-rounded.mat-flat-button,
+.button-rounded.mat-stroked-button {
+  border-radius: 25% / 50%;
+}
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.search-form {
+  padding: 16px; /* Odstęp wewnętrzny od krawędzi formularza */
+}
+
+mat-form-field {
+  margin-top: 8px;  /* Odstęp od góry */
+  margin-bottom: 8px; /* Odstęp od dołu */
+}
+.form-actions {
+  display: flex;
+  align-items: center; /* Wyrównanie w pionie */
+  gap: 16px; /* Odstęp między polem a przyciskiem */
+}
+
+.search-field {
+  flex: 1; /* Wypełnia resztę dostępnej przestrzeni */
+}
+
+.customButton {
+  white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}
+
+.project-link {
+  text-decoration: none; /* Usuwa podkreślenie */
+  color: black; /* Ustawia czarny kolor */
+  font-weight: bold; /* Pogrubia tekst */
+  cursor: pointer; /* Zmienia kursor na rękę */
+}
+
+.project-link:hover {
+  text-decoration: underline; /* Dodaje podkreślenie po najechaniu */
+  color: #555; /* Przyciemnia kolor po najechaniu */
+}
+
+.snackbar-success {
+  background-color: #4caf50; /* Zielony */
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #f44336; /* Czerwony */
+  color: white;
+}
+
+.snackbar-info {
+  background-color: #2196f3; /* Niebieski */
+  color: white;
+}

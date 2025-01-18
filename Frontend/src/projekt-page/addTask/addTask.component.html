@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Dodaj projekt</h2>
+<mat-dialog-content>
+  <form [formGroup]="taskFrom" class="form-container">
+    <!-- Nazwa projektu -->
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa zadania</mat-label>
+      <input matInput formControlName="nazwa" required />
+    </mat-form-field>
+
+    <!-- Opis projektu -->
+    <mat-form-field appearance="fill">
+      <mat-label>Opis zadania</mat-label>
+      <textarea matInput formControlName="opis"></textarea>
+    </mat-form-field>
+
+    <!-- Termin oddania -->
+    <mat-form-field appearance="fill">
+      <mat-label>Termin ukończenia</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="dataOddania"
+        placeholder="Wybierz datę"
+        required
+      />
+      <!-- Kalendarz -->
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Godzina ukończenia</mat-label>
+        <input type="number" min="0" max="23" matInput formControlName="czas" required (input)="validateHour($event)"/>
+      </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button>Anuluj</button>
+  <button mat-raised-button color="primary" (click)="onSave()" >Zapisz</button>
+</mat-dialog-actions>
