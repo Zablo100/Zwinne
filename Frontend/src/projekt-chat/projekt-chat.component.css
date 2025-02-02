@@ -49,3 +49,11 @@ button {
 button:hover {
   background-color: #1565c0;
 }
+.admin {
+  color: red;
+  font-weight: bold;
+}
+
+.user {
+  color: blue;
+}

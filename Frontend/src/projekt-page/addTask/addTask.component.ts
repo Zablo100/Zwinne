@@ -68,29 +68,29 @@ export class AddTaskComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    
-  } 
+
+  }
 
   hourValidator(control: any): { [key: string]: boolean } | null {
     const value = control.value;
-    
+
     if (value !== null && (isNaN(value) || value < 0 || value > 23)) {
         return { 'invalidHour': true };
     }
-    
+
     return null;
 }
 
   validateHour(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     let value = parseInt(inputElement.value, 10);
-    
+
     if (isNaN(value) || value < 0) {
         value = 0;
     } else if (value > 23) {
         value = 23;
     }
-    
+
     inputElement.value = value.toString();
   }
 
@@ -115,7 +115,7 @@ export class AddTaskComponent implements AfterViewInit{
     const poprawionyCzas = this.taskFrom.value.czas + 1 // Cofa o godzinke tak o wrrrr
     dataOddania.setHours(poprawionyCzas, 0, 0, 0);
     const dataString = dataOddania.toISOString().replace('T', ' ').split('.')[0];
-    
+
     return dataString
   }
 

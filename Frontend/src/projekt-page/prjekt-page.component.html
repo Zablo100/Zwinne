@@ -44,7 +44,7 @@
   <section *ngIf="isAssigned" class="project-tasks">
     <h2>Lista Zadań</h2>
     <button class="btn btn-md mb-3 customButton shadow btn-success" (click)="openAddTaskDialog()">
-      <i class="fa fa-plus"></i>  Utwórz projekt
+      <i class="fa fa-plus"></i>  Utwórz zadanie
     </button>
     <ul>
       <li *ngFor="let zadanie of Zadania">
@@ -81,4 +81,11 @@
     <h3 *ngIf="Pliki?.length === 0">Brak załączonych plików.</h3>
     <p *ngIf="Pliki?.length === undefined">Brak danych o plikach.</p>
   </section>
+
+  <section>
+    <app-projekt-chat *ngIf="Projekt" [projektId]="Projekt.projektId"></app-projekt-chat>
+
+  </section>
+
+
 </mat-card>

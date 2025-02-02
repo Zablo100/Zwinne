@@ -95,7 +95,11 @@ public class ZadanieController {
     }
 
     @PatchMapping("/zadania/{zadanieId}/status")
-    public ResponseEntity<Void> updateStatus(@PathVariable Integer zadanieId, @RequestBody String newStatus) {
+    public ResponseEntity<Void> updateStatus(@PathVariable Integer zadanieId, @RequestBody java.util.Map<String, String> requestBody) {
+        String newStatus = requestBody.get("status");
+        System.out.println("Otrzymany request body: " + requestBody);
+        System.out.println("Nowy status: " + newStatus);
+
         return zadanieService.getZadanie(zadanieId)
                 .map(existingZadanie -> {
                     existingZadanie.setStatus(newStatus);
@@ -103,6 +107,8 @@ public class ZadanieController {
                     return new ResponseEntity<Void>(HttpStatus.OK);
                 }).orElse(ResponseEntity.notFound().build());
     }
+
+
 
     @GetMapping("/zadania")
     public ResponseEntity<List<Zadanie>> getAllZadania() {

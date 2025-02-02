@@ -56,8 +56,12 @@ export class KanbanBoardComponent {
   }
 
   getTasksForColumn(columnKey: string): ZadanieModel[] {
-    return this.tasks.filter((task) => task.status === columnKey) || [];
+    if (!this.tasks) {
+      return [];
+    }
+    return this.tasks.filter(task => task.status === columnKey);
   }
+
 
   onDrop(event: CdkDragDrop<ZadanieModel[]>, columnKey: string): void {
     const task = event.item.data;
@@ -95,16 +99,19 @@ export class KanbanBoardComponent {
 
 
   private updateTaskStatus(taskId: number, newStatus: string): Observable<void> {
-    const headers = this.getAuthHeaders();
+    const headers = this.getAuthHeaders().set('Content-Type', 'application/json');
+    const body = { status: newStatus };
+    console.log("Wysyłam updateTaskStatus, body:", body);
     return this.http
-      .patch<void>(`${this.BASE_URL}/zadania/${taskId}/status`, newStatus, { headers }) // Wysyłamy tylko tekst
+      .patch<void>(`${this.BASE_URL}/zadania/${taskId}/status`, body, { headers })
       .pipe(
         catchError((error) => {
-          console.error('Błąd podczas aktualizacji statusu zadaniaa:', error);
+          console.error('Błąd podczas aktualizacji statusu zadania:', error);
           return throwError(error);
         })
       );
   }
+
 
 
   private getAuthHeaders(): HttpHeaders {

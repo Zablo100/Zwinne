@@ -3,6 +3,7 @@ package com.project.project_rest_api.service;
 import com.project.project_rest_api.datasource.ProjektRepository;
 import com.project.project_rest_api.datasource.ZadanieRepository;
 import com.project.project_rest_api.model.Zadanie;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +31,12 @@ public class ZadanieServiceImpl implements ZadanieService {
     }
 
     @Override
+    @Transactional
     public Zadanie setZadanie(Zadanie zadanie) {
-        return zadanieRepository.save(zadanie);
+        System.out.println("Aktualizuję zadanie: " + zadanie.getZadanieId() + " nowy status: " + zadanie.getStatus());
+        Zadanie updated = zadanieRepository.save(zadanie);
+        System.out.println("Zaktualizowano zadanie: " + updated.getZadanieId() + " status: " + updated.getStatus());
+        return updated;
     }
 
     @Override

@@ -1,18 +1,24 @@
 <div class="chat-container">
   <h2>Chat</h2>
   <div class="messages">
-    <!-- Wyświetlanie nadawcy i treści wiadomości -->
-    <div *ngFor="let message of messages" class="message">
-      <strong>{{ message.sender }}:</strong> {{ message.content }}
+    <!-- Iteracja po wiadomościach -->
+    <div *ngFor="let msg of messages" class="message">
+      <!-- Warunkowe przypisanie klasy: jeśli rola studenta to "admin", użyj klasy "admin", w przeciwnym razie "user" -->
+      <strong [ngClass]="{'admin': msg.student.role === 'admin', 'user': msg.student.role !== 'admin'}">
+        {{ msg.student.imie }} {{ msg.student.nazwisko }} - {{ msg.student.nrIndeksu }}:
+      </strong>
+      <span>{{ msg.content }} - </span>
+      <small>{{ msg.timestamp | date:'short' }}</small>
+      <!-- Przykładowo możesz tu dodać przyciski lub dodatkowe informacje -->
     </div>
   </div>
   <div class="input-container">
     <input
       [(ngModel)]="messageInput"
       type="text"
-      placeholder="Type your message..."
+      placeholder="Wpisz wiadomość..."
       (keyup.enter)="sendMessage()"
     />
-    <button (click)="sendMessage()">Send</button>
+    <button (click)="sendMessage()">Wyślij</button>
   </div>
 </div>

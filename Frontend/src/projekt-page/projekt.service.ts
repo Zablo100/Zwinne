@@ -44,7 +44,7 @@ export class ProjektService {
 
   downloadFile(fileName: string): Observable<Blob> {
     const headers = new HttpHeaders({
-      'Authorization': 'Basic ' + btoa('admin:admin') // Dodaj nagłówki uwierzytelniania
+      'Authorization': 'Basic ' + btoa('admin:admin')
     });
 
     return this.http.get(`${this.baseUrl}/files/${fileName}`, { headers, responseType: 'blob' });

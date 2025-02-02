@@ -14,6 +14,7 @@ import {StorageService} from "../app/Services/storage.service";
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom, map } from 'rxjs';
 import { AddTaskComponent } from './addTask/addTask.component';
+import {ProjektChatComponent} from "../projekt-chat/projekt-chat.component";
 @Component({
   selector: 'app-prjekt-page',
   standalone: true,
@@ -24,7 +25,8 @@ import { AddTaskComponent } from './addTask/addTask.component';
     MatButton,
     MatIconModule,
 
-    KanbanBoardComponent
+    KanbanBoardComponent,
+    ProjektChatComponent
   ],
   templateUrl: './prjekt-page.component.html',
   styleUrls: ['./prjekt-page.component.css']
@@ -37,12 +39,12 @@ export class PrjektPageComponent {
 
   isAssigned: boolean = false;
 
-  constructor( private storageService: StorageService, 
-    private matIconRegistry: MatIconRegistry, 
-    private sanitizer: DomSanitizer, 
-    private service: ProjektService, 
+  constructor( private storageService: StorageService,
+    private matIconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    private service: ProjektService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) 
+    private dialog: MatDialog)
     {
     console.log('Rejestruję ikonę');
     this.matIconRegistry.addSvgIcon(
